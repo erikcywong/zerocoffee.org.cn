@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revenue simulator — ZeroCarbon Verify</title>
+<meta name="description" content="Model verification revenue, cost and margin for a portfolio of certified farms.">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  .sim-out{background:#fff;border:1px solid var(--line);border-radius:4px;padding:18px 20px}
+  .chart{width:100%;height:260px;display:block}
+  .legend{display:flex;gap:18px;font-size:12px;color:var(--gray);margin-top:8px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+  table.data td.big{font-family:var(--mono);color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="util"><div class="wrap">
+  <span>Independent verification body · Hong Kong</span>
+  <span class="badge warn">Accreditation in progress — not yet accredited</span>
+  <div class="right"><a href="../filing/index.html">中文版</a><a href="../registry/index.html">Label registry</a></div>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/><path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/><path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg>
+    <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span></a>
+  <nav class="main">
+    <div class="item"><a href="../services/index.html">Services</a></div>
+    <div class="item"><a href="../industries/index.html">Industries</a></div>
+    <div class="item"><a href="../platform/index.html">Digital platform</a></div>
+    <div class="item on"><a href="index.html">Simulator</a></div>
+    <div class="item"><a href="../about/index.html">About</a></div>
+  <div class="item"><a href="../certify/index.html">Certify</a></div>
+  </nav>
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../certify/index.html">Run a case</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a></div>
+</div></header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Revenue simulator</div>
+      <h2>What a certification portfolio pays</h2>
+      <p>Verification is a labour business wearing a software costume: the fee is person-days plus liability, not
+        seats. Move the inputs and watch where the margin actually comes from.</p>
+    </div>
+
+    <div class="grid-2" style="align-items:start">
+      <form id="simForm" onsubmit="return false">
+        <div class="field"><label for="s-farms">Farms in the portfolio</label>
+          <input id="s-farms" type="number" min="1" max="500" value="24"></div>
+        <div class="field"><label for="s-plants">Plantlets per farm per year</label>
+          <input id="s-plants" type="number" min="1000" step="1000" value="240000"></div>
+        <div class="field"><label for="s-batch">Batch size (plantlets per label)</label>
+          <input id="s-batch" type="number" min="60" step="10" value="480"></div>
+        <div class="field"><label for="s-grade">Evidence grade mix</label>
+          <select id="s-grade"><option>A</option><option selected>B</option><option>C</option></select></div>
+        <div class="field"><label for="s-years">Projection horizon</label>
+          <select id="s-years"><option>1</option><option>2</option><option selected>3</option><option>5</option></select></div>
+        <button class="btn btn-primary" id="s-run" type="button">Project</button>
+        <p class="hint" style="margin-top:10px">Ramp: 30% of farms in year 1, 60% in year 2, 100% from year 3.</p>
+      </form>
+      <div>
+        <div class="sim-out">
+          <div class="kicker" style="margin-bottom:10px">Annual revenue vs cost</div>
+          <canvas class="chart" id="chart" width="900" height="520"></canvas>
+          <div class="legend">
+            <span><i style="background:#00958f"></i>Revenue</span>
+            <span><i style="background:#00205b"></i>Cost</span>
+            <span><i style="background:#b4761a"></i>Gross</span>
+          </div>
+        </div>
+        <div class="sim-out" style="margin-top:16px" id="totals"></div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:50px;font-size:24px;letter-spacing:-.5px">Year by year</h2>
+    <table class="data" id="table">
+      <thead><tr>
+        <th>Year</th><th class="n">Farms</th><th class="n">Labels</th>
+        <th class="n">Revenue</th><th class="n">Cost</th><th class="n">Gross</th>
+        <th class="n">Margin</th><th class="n">Cumulative</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="grid-2" style="margin-top:26px">
+      <div class="card">
+        <div class="tagline">Where the money comes from</div>
+        <p style="font-size:14px;color:#3c4a59">
+          Year 1 is a verification year: first-time assessment dominates. From year 2 the recurring base is
+          surveillance plus labels, which is why the margin improves without new sales.
+        </p>
+      </div>
+      <div class="card">
+        <div class="tagline">What the buyer pays separately</div>
+        <p style="font-size:14px;color:#3c4a59" id="platformNote"></p>
+      </div>
+    </div>
+
+    <div class="note" style="border-left:3px solid #b4761a;background:#fdf8ef;padding:14px 18px;margin-top:22px">
+      <b>Model, not forecast.</b> Person-days are fixed per engagement: 6 for the first-year verification, 2 for
+      surveillance, 0.5 for administration, plus a 5% label sample at 0.08 day each;
+      day rate ¥3,800 plus 25% overhead. No customer has bought this yet — the ramp is an assumption, the
+      arithmetic is not.
+    </div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Independent verification body for carbon claims in agricultural supply chains. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
+    <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a></div>
+    <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../filing/conditions.html">Conditions of establishment</a><a href="../filing/governance.html">Impartiality</a><a href="../contact/index.html">Contact</a></div>
+    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../certify/index.html">Run a case</a><a href="../filing/index.html">中文版（设立文件）</a></div>
+  </div>
+  <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
+</div></footer>
+
+<script src="../assets/api.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  function draw(rows) {
+    var cv = $('chart'), ctx = cv.getContext('2d');
+    var W = cv.width, H = cv.height, pad = { l: 70, r: 20, t: 20, b: 44 };
+    var iw = W - pad.l - pad.r, ih = H - pad.t - pad.b;
+    ctx.clearRect(0, 0, W, H);
+    var max = Math.max.apply(null, rows.map(function (r) { return Math.max(r.revenue, r.cost, Math.abs(r.gross)); })) || 1;
+    var n = rows.length, slot = iw / n, bw = Math.min(46, slot * 0.22);
+    // grid
+    ctx.strokeStyle = '#e8edf3'; ctx.lineWidth = 1;
+    for (var g = 0; g <= 4; g++) {
+      var y = pad.t + ih * g / 4;
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+      ctx.fillStyle = '#9aa7b6'; ctx.font = '18px ui-monospace,monospace'; ctx.textAlign = 'right';
+      ctx.fillText(ZV.money(max * (1 - g / 4)).replace('¥', ''), pad.l - 10, y + 6);
+    }
+    rows.forEach(function (r, i) {
+      var cx = pad.l + slot * i + slot / 2;
+      var vals = [[r.revenue, '#00958f'], [r.cost, '#00205b'], [Math.max(0, r.gross), '#b4761a']];
+      vals.forEach(function (v, k) {
+        var h = Math.max(2, ih * (v[0] / max));
+        var x = cx - bw * 1.6 + k * (bw + 6);
+        ctx.fillStyle = v[1];
+        ctx.fillRect(x, pad.t + ih - h, bw, h);
+      });
+      ctx.fillStyle = '#5b6b7d'; ctx.font = '20px ui-monospace,monospace'; ctx.textAlign = 'center';
+      ctx.fillText('Y' + r.year, cx, H - 14);
+    });
+  }
+
+  function run() {
+    var r = ZV.simulate({
+      farms: +$('s-farms').value, plantlets: +$('s-plants').value,
+      batchSize: +$('s-batch').value, grade: $('s-grade').value, years: +$('s-years').value
+    });
+    draw(r.rows);
+    $('table').querySelector('tbody').innerHTML = r.rows.map(function (x) {
+      return '<tr><td>Year ' + x.year + '</td><td class="n">' + x.farms + '</td><td class="n">' + x.labels.toLocaleString() + '</td>' +
+        '<td class="n big">' + ZV.money(x.revenue) + '</td><td class="n">' + ZV.money(x.cost) + '</td>' +
+        '<td class="n big" style="color:' + (x.gross >= 0 ? '#04726d' : '#9c3a2c') + '">' + ZV.money(x.gross) + '</td>' +
+        '<td class="n">' + x.margin.toFixed(1) + '%</td><td class="n">' + ZV.money(x.cum) + '</td></tr>';
+    }).join('');
+    $('totals').innerHTML =
+      '<div class="kicker" style="margin-bottom:8px">' + r.inputs.years + '-year totals</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;font-size:14px">' +
+      '<div>Revenue</div><div class="mono" style="text-align:right"><b>' + ZV.money(r.totals.revenue) + '</b></div>' +
+      '<div>Cost</div><div class="mono" style="text-align:right">' + ZV.money(r.totals.cost) + '</div>' +
+      '<div>Gross</div><div class="mono" style="text-align:right"><b style="color:#04726d">' + ZV.money(r.totals.gross) + '</b></div>' +
+      '<div>Avg margin</div><div class="mono" style="text-align:right">' +
+        (r.totals.revenue ? (r.totals.gross / r.totals.revenue * 100).toFixed(1) : 0) + '%</div>' +
+      '</div>';
+    $('platformNote').innerHTML = 'The platform sells the same labels to buyers at ¥40–80 by grade: ' +
+      '<b>' + ZV.money(r.totals.platformLabelFees) + '</b> over the same period, of which ' +
+      ZV.money(r.rows.reduce(function (a, x) { return a + x.labels; }, 0) * ZV.RATES.label_review) +
+      ' is the review fee you see above.';
+  }
+
+  $('s-run').addEventListener('click', run);
+  ['s-farms', 's-plants', 's-batch', 's-grade', 's-years'].forEach(function (id) {
+    $(id).addEventListener('change', run);
+  });
+  run();
+})();
+</script>
+</body>
+</html>

@@ -24,6 +24,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = ROOT
 DATA = os.path.join(ROOT, "data")
 LEADS = os.path.join(DATA, "leads.jsonl")
+CERTS = os.path.join(DATA, "certifications.jsonl")
 os.makedirs(DATA, exist_ok=True)
 
 ADMIN_TOKEN = os.environ.get("ZV_ADMIN_TOKEN", "dev-token-change-me")
@@ -45,7 +46,7 @@ MIME = {
 RATES = {
     "pcf_site": 28000,
     "surveillance": 12000,
-    "label_batch": 25,
+    "label_batch": 40,
     "baseline": 6000,
     "grade_site": 4000,
     "ledger": 8000,
@@ -145,6 +146,126 @@ def read_leads(limit: int = 200) -> list[dict]:
     return rows[::-1][:limit]
 
 
+
+
+# ------------------------------------------------------------------ certification model
+# Mirrors certify() in assets/api.js. Keep the two in step.
+WORKFLOW = [
+    ("application", "Application & scope", 2),
+    ("docreview", "Document review", 3),
+    ("verification", "On-site verification", 2),
+    ("techreview", "Technical review", 2),
+    ("issued", "Label issued", 1),
+]
+
+
+def fnv(text: str) -> str:
+    h = 0x811C9DC5
+    for ch in text:
+        h ^= ord(ch)
+        h = (h * 0x01000193) & 0xFFFFFFFF
+    return f"{h:08x}"
+
+
+def build_certification(d: dict) -> dict:
+    farm = (d.get("farm") or "unnamed farm").strip()[:80]
+    plantlets = max(240, int(d.get("plantlets") or 240000))
+    batch = max(60, int(d.get("batchSize") or 480))
+    grade = d.get("grade") or "B"
+    batches = round(plantlets / batch)
+    fee = 28000 + 6000 + 4000 + batches * 40
+    days = sum(w[2] for w in WORKFLOW)
+    issued = time.time()
+    seq = f"{int(issued) % 100000:05d}"
+    payload = f"{farm}|{plantlets}|{grade}|CJV-MTH-1.0|{seq}"
+    iso = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(issued))
+    expires = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(issued + 365 * 86400))
+    return {
+        "id": f"ZC-{time.strftime('%Y', time.localtime(issued))}-{seq}",
+        "farm": farm, "plantlets": plantlets, "batchSize": batch, "batches": batches,
+        "grade": grade, "method": "CJV-MTH-1.0", "hash": fnv(payload),
+        "fee": fee, "days": days, "issued": iso, "expires": expires, "status": "issued",
+        "workflow": [
+            {"id": w[0], "en": w[1], "days": w[2],
+             "at": time.strftime("%Y-%m-%d", time.localtime(issued - (len(WORKFLOW) - 1 - i) * 2 * 86400))}
+            for i, w in enumerate(WORKFLOW)
+        ],
+        "lines": [
+            {"k": "PCF verification (year 1)", "v": 28000},
+            {"k": "Baseline co-signing", "v": 6000},
+            {"k": "Evidence grade assessment", "v": 4000},
+            {"k": f"Label review × {batches}", "v": batches * 40},
+        ],
+    }
+
+
+def store_cert(rec: dict) -> dict:
+    with LOCK:
+        with open(CERTS, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    return rec
+
+
+def read_certs(limit: int = 500) -> list[dict]:
+    if not os.path.exists(CERTS):
+        return []
+    with LOCK:
+        with open(CERTS, encoding="utf-8") as fh:
+            rows = [json.loads(x) for x in fh if x.strip()]
+    return rows[::-1][:limit]
+
+
+# ------------------------------------------------------------------ revenue model
+def simulate(d: dict) -> dict:
+    farms = max(1, min(500, int(d.get("farms") or 20)))
+    plantlets = max(1000, int(d.get("plantlets") or 240000))
+    batch = max(60, int(d.get("batchSize") or 480))
+    years = max(1, min(10, int(d.get("years") or 3)))
+    grade = d.get("grade") or "B"
+    ramp = [0.3, 0.6, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+    labels_year = round(plantlets / batch)
+    grade_price = {"A": 80, "B": 60, "C": 40}.get(grade, 60)
+
+    rows, cum = [], 0.0
+    for y in range(1, years + 1):
+        live = max(1, round(farms * ramp[min(y - 1, len(ramp) - 1)]))
+        prev = round(farms * ramp[min(y - 2, len(ramp) - 1)]) if y > 1 else 0
+        new = live if y == 1 else max(0, live - prev)
+        labels = live * labels_year
+        rev = {
+            "verification": new * 28000,
+            "surveillance": 0 if y == 1 else live * 12000,
+            "labels": labels * 40,
+            "baseline": new * 6000 if y == 1 else 0,
+            "grade": live * 4000,
+        }
+        revenue = sum(rev.values())
+        # verification is per site, not per label: 5% sampling at 0.08 day each
+        days = new * 6 + (0 if y == 1 else live * 2) + labels * 0.05 * 0.08 + live * 0.5
+        cost = days * 3800 * 1.25
+        gross = revenue - cost
+        cum += gross
+        rows.append({
+            "year": y, "farms": live, "labels": labels,
+            "revenue": round(revenue), "cost": round(cost), "gross": round(gross),
+            "cum": round(cum), "margin": round(gross / revenue * 100, 1) if revenue else 0,
+            "breakdown": {k: round(v) for k, v in rev.items()},
+            "platformLabelFees": round(labels * grade_price),
+        })
+    return {
+        "model": "zv-revenue-v1",
+        "inputs": {"farms": farms, "plantlets": plantlets, "batchSize": batch, "years": years,
+                   "grade": grade, "withLabel": True},
+        "labelsYear": labels_year, "rows": rows,
+        "totals": {
+            "revenue": sum(r["revenue"] for r in rows),
+            "cost": sum(r["cost"] for r in rows),
+            "gross": sum(r["gross"] for r in rows),
+            "platformLabelFees": sum(r["platformLabelFees"] for r in rows),
+        },
+    }
+
+
 # ------------------------------------------------------------------ http handler
 class Handler(BaseHTTPRequestHandler):
     server_version = "ZeroCarbonVerify/1.0"
@@ -187,16 +308,22 @@ class Handler(BaseHTTPRequestHandler):
 
     # ---- routes
     def do_GET(self):
-        path = urllib.parse.urlparse(self.path).path
-        qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+        parsed = urllib.parse.urlparse(self.path)
+        path, qs = parsed.path, urllib.parse.parse_qs(parsed.query)
 
         if path == "/api/health":
             return self._json(200, {
-                "ok": True, "service": "zerocarbon-verify", "time": time.strftime("%Y-%m-%dT%H:%M:%S"),
-                "leads": len(read_leads(10_000)), "model": "zv-quote-v1",
+                "ok": True, "service": "zerocarbon-verify",
+                "time": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                "leads": len(read_leads(10_000)), "certs": len(read_certs(10_000)),
+                "models": ["zv-quote-v1", "zv-revenue-v1"],
             })
         if path == "/api/rates":
             return self._json(200, {"rates": RATES, "currency": "CNY"})
+        if path == "/api/certifications":
+            return self._json(200, {"certs": read_certs()})
+        if path == "/api/simulate":
+            return self._json(200, simulate({k: v[0] for k, v in qs.items()}))
         if path == "/api/leads":
             token = self.headers.get("X-Admin-Token") or (qs.get("token") or [""])[0]
             if token != ADMIN_TOKEN:
@@ -209,7 +336,12 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/quote":
             return self._json(200, build_quote(self._body() or {}))
-
+        if path == "/api/simulate":
+            return self._json(200, simulate(self._body() or {}))
+        if path == "/api/certifications":
+            rec = build_certification(self._body() or {})
+            store_cert(rec)
+            return self._json(201, rec)
         if path == "/api/leads":
             d = self._body() or {}
             d["ua"] = self.headers.get("User-Agent", "")
@@ -219,7 +351,6 @@ class Handler(BaseHTTPRequestHandler):
             rec = store_lead(d)
             return self._json(201, {"id": rec["id"], "received": rec["received"],
                                     "next": "We reply within two working days."})
-
         return self._json(404, {"error": "not found"})
 
     def _static(self, path: str):

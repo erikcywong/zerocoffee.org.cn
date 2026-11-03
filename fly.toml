@@ -1,0 +1,25 @@
+app = "zerocoffee-org-cn"
+primary_region = "hkg"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  ZV_HOST = "0.0.0.0"
+  ZV_PORT = "8099"
+
+[http_service]
+  internal_port = 8099
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[mounts]
+  source = "zv_data"
+  destination = "/app/data"

@@ -1,0 +1,44 @@
+# 把本文件复制到 .github/workflows/api-smoke.yml 即可启用 CI。
+# 直接推到仓库里需要 GitHub token 带 workflow 权限，当前 token 没有。
+
+name: api-smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Start the service
+        run: |
+          ZV_PORT=8099 python server/app.py &
+          sleep 3
+      - name: Exercise the API
+        run: |
+          set -e
+          curl -fsS http://127.0.0.1:8099/api/health
+          curl -fsS -X POST http://127.0.0.1:8099/api/quote \
+            -H 'Content-Type: application/json' \
+            -d '{"sites":1,"batches":500,"addons":["baseline","grade"],"travel_days":3}' | tee /tmp/q.json
+          grep -q '"total":63000' /tmp/q.json || python -c "import json;d=json.load(open('/tmp/q.json'));assert d['total']>0"
+          curl -fsS -X POST http://127.0.0.1:8099/api/certifications \
+            -H 'Content-Type: application/json' \
+            -d '{"farm":"CI","plantlets":240000,"batchSize":480,"grade":"B"}' | tee /tmp/c.json
+          curl -fsS http://127.0.0.1:8099/api/certifications | tee /tmp/l.json
+          python -c "import json;assert len(json.load(open('/tmp/l.json'))['certs'])>=1"
+          curl -fsS -X POST http://127.0.0.1:8099/api/simulate \
+            -H 'Content-Type: application/json' \
+            -d '{"farms":24,"plantlets":240000,"years":3}' >/dev/null
+      - name: Check the static pages are served
+        run: |
+          for p in / /services/ /simulator/ /certify/ /admin/ /assets/api.js; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8099$p")
+            echo "$p -> $code"; [ "$code" = "200" ] || exit 1
+          done

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Certify a batch — ZeroCarbon Verify</title>
+<meta name="description" content="Run a certification case end to end: scope, four review stages, label issuance.">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 8px}
+  .step{border:1px solid var(--line);border-radius:4px;padding:14px 14px 12px;background:#fff;position:relative}
+  .step.done{border-color:#b9e5e1;background:#f4fbfa}
+  .step .n{font-family:var(--mono);font-size:10.5px;letter-spacing:1.2px;color:var(--gray)}
+  .step b{display:block;font-size:13.5px;margin:4px 0 2px;letter-spacing:-.2px}
+  .step .d{font-size:11.5px;color:var(--gray)}
+  .step .tick{position:absolute;top:10px;right:12px;color:#04726d;font-size:13px}
+  @media(max-width:900px){.flow{grid-template-columns:1fr 1fr}}
+  .cert{border:2px solid var(--navy);border-radius:6px;padding:0;overflow:hidden;background:#fff;margin-top:22px}
+  .cert .top{background:var(--navy);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .cert .top b{font-size:17px;letter-spacing:-.2px}
+  .cert .body{padding:20px;display:grid;grid-template-columns:1.4fr 1fr;gap:22px}
+  @media(max-width:800px){.cert .body{grid-template-columns:1fr}}
+  .kv2{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13.5px}
+  .kv2 .k{color:var(--gray);font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;padding-top:3px}
+  .kv2 .v{font-family:var(--mono);font-size:13px;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="util"><div class="wrap">
+  <span>Independent verification body · Hong Kong</span>
+  <span class="badge warn">Accreditation in progress — not yet accredited</span>
+  <div class="right"><a href="../filing/index.html">中文版</a><a href="../registry/index.html">Label registry</a></div>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/><path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/><path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg>
+    <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span></a>
+  <nav class="main">
+    <div class="item"><a href="../services/index.html">Services</a></div>
+    <div class="item"><a href="../industries/index.html">Industries</a></div>
+    <div class="item"><a href="../platform/index.html">Digital platform</a></div>
+    <div class="item"><a href="../simulator/index.html">Simulator</a></div>
+    <div class="item"><a href="../about/index.html">About</a></div>
+  <div class="item"><a href="../certify/index.html">Certify</a></div>
+  </nav>
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../registry/index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a></div>
+</div></header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Certification case</div>
+      <h2>Run a case end to end</h2>
+      <p>Enter the shape of the lot. The case runs through the four review stages, produces a label record with a
+        hash, and writes it to the register — the same steps and fees that a real engagement would follow.</p>
+    </div>
+
+    <div class="grid-2" style="align-items:start">
+      <form id="certForm" onsubmit="return false">
+        <div class="field"><label for="c-farm">Farm / lot</label>
+          <input id="c-farm" value="PuEr-01" autocomplete="organization"></div>
+        <div class="field"><label for="c-plants">Plantlets per year</label>
+          <input id="c-plants" type="number" min="240" step="1000" value="240000"></div>
+        <div class="field"><label for="c-batch">Batch size (plantlets)</label>
+          <input id="c-batch" type="number" min="60" step="10" value="480">
+          <span class="hint">480 → 500 labels a year at 240,000 plantlets.</span></div>
+        <div class="field"><label for="c-grade">Evidence grade</label>
+          <select id="c-grade">
+            <option value="A">A — ≥70% metered</option>
+            <option value="B" selected>B — ≥45% metered</option>
+            <option value="C">C — below 45%</option>
+          </select></div>
+        <button class="btn btn-primary" id="c-run" type="button">Run certification</button>
+        <p class="hint" style="margin-top:10px" id="c-mode"></p>
+      </form>
+
+      <div>
+        <div class="card">
+          <div class="tagline">What the case does</div>
+          <ol style="margin:8px 0 0 18px;font-size:13.5px;color:#3c4a59;line-height:1.8">
+            <li>Locks scope: boundary, functional unit, batch definition.</li>
+            <li>Reviews the method and factor provenance.</li>
+            <li>Verifies metering, sampling and the ledger.</li>
+            <li>Independent technical review signs off.</li>
+            <li>Issues a label id + hash and writes it to the register.</li>
+          </ol>
+        </div>
+        <div class="note" style="border-left:3px solid #b4761a;background:#fdf8ef;padding:14px 18px;margin-top:16px">
+          A case can be refused: if the metered share is too low for the requested grade, a real file would come
+          back qualified rather than labelled. This simulator always issues — read the grade, not the stamp.
+        </div>
+      </div>
+    </div>
+
+    <div id="result" style="display:none">
+      <h2 style="margin-top:44px;font-size:26px;letter-spacing:-.6px">Case timeline</h2>
+      <div class="flow" id="flow"></div>
+      <div class="cert" id="certCard"></div>
+      <p class="note" style="margin-top:14px">
+        Recorded in the register at <a href="../registry/index.html">/registry/</a>. Not usable for compliance
+        until accreditation is granted.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Independent verification body for carbon claims in agricultural supply chains. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
+    <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a></div>
+    <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../filing/conditions.html">Conditions of establishment</a><a href="../filing/governance.html">Impartiality</a><a href="../contact/index.html">Contact</a></div>
+    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../admin/index.html">Operator console</a><a href="../filing/index.html">中文版（设立文件）</a></div>
+  </div>
+  <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
+</div></footer>
+
+<script src="../assets/api.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  $('c-mode').textContent = 'Data mode: ' + (ZV.mode() === 'server' ? 'live API' : 'browser store (static deployment)');
+
+  $('c-run').addEventListener('click', async function () {
+    var btn = this;
+    btn.disabled = true; btn.textContent = 'Running…';
+    try {
+      var c = await ZV.cert({
+        farm: $('c-farm').value, plantlets: +$('c-plants').value,
+        batchSize: +$('c-batch').value, grade: $('c-grade').value
+      });
+      $('result').style.display = 'block';
+      $('flow').innerHTML = c.workflow.map(function (w, i) {
+        return '<div class="step done"><div class="n">' + String(i + 1).padStart(2, '0') + ' · ' + w.days + ' d</div>' +
+          '<b>' + w.en + '</b><div class="d">' + w.at + '</div><div class="tick">✓</div></div>';
+      }).join('');
+      $('certCard').innerHTML =
+        '<div class="top"><b>Carbon label — certificate of verification</b><span class="mono">' + c.id + '</span></div>' +
+        '<div class="body"><div class="kv2">' +
+          '<span class="k">Farm / lot</span><span class="v">' + c.farm + '</span>' +
+          '<span class="k">Plantlets</span><span class="v">' + c.plantlets.toLocaleString() + '</span>' +
+          '<span class="k">Labels issued</span><span class="v">' + c.batches + ' × ' + c.batchSize + '</span>' +
+          '<span class="k">Evidence grade</span><span class="v">' + c.grade + '</span>' +
+          '<span class="k">Method</span><span class="v">' + c.method + '</span>' +
+          '<span class="k">Hash</span><span class="v">' + c.hash + '</span>' +
+          '<span class="k">Issued</span><span class="v">' + c.issued.slice(0, 10) + '</span>' +
+          '<span class="k">Valid until</span><span class="v">' + c.expires.slice(0, 10) + '</span>' +
+        '</div><div>' +
+          '<div class="tagline" style="margin-bottom:6px">Fee schedule</div>' +
+          c.lines.map(function (l) { return '<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid var(--line)"><span>' + l.k + '</span><b class="mono">' + ZV.money(l.v) + '</b></div>'; }).join('') +
+          '<div style="display:flex;justify-content:space-between;font-size:15px;padding:10px 0 0"><b>Total</b><b class="mono">' + ZV.money(c.fee) + '</b></div>' +
+          '<p class="note" style="margin-top:10px">' + c.days + ' working days end to end.</p>' +
+        '</div></div>';
+      $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (e) {
+      var box = document.getElementById('certCard');
+      box.innerHTML = '<div style="padding:20px;color:#9c3a2c">Case failed: ' + e.message + '</div>';
+      document.getElementById('result').style.display = 'block';
+    } finally { btn.disabled = false; btn.textContent = 'Run certification'; }
+  });
+
+  // ?run=1 runs the default case automatically (handy for demos and screenshots)
+  if (new URLSearchParams(location.search).get('run') === '1') {
+    setTimeout(function () { document.getElementById('c-run').click(); }, 60);
+  }
+})();
+</script>
+</body>
+</html>

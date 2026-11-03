@@ -80,3 +80,45 @@ They are deliberately identical; change both or neither.
   Do not remove it: a buyer who checks the HKAS directory and finds nothing is worse off than
   one who reads the caveat.
 - No carbon-credit language anywhere. Labels are disclosures, not tradable assets.
+
+## Full stack — two ways to run the same site
+
+The front end calls one API surface (`assets/api.js`). Where that surface lives is a deployment choice:
+
+| Mode | When | Storage |
+|---|---|---|
+| **browser store** | default on GitHub Pages, no server | `localStorage` — leads and certificates persist in the visitor's browser |
+| **live API** | `?api=https://your-host` or `localStorage zv-api` | `data/*.jsonl` on the server |
+
+```powershell
+python server/app.py            # http://127.0.0.1:8099
+# then open the site with ?api=http://127.0.0.1:8099 to use the shared database
+```
+
+### Endpoints
+
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/api/quote` | deterministic fee model `zv-quote-v1` |
+| POST | `/api/simulate` | revenue model `zv-revenue-v1` |
+| POST | `/api/certifications` | run a certification case, persist it |
+| GET | `/api/certifications` | list issued certificates |
+| POST | `/api/leads` | validated enquiry capture |
+| GET | `/api/leads?token=…` | lead list (admin token) |
+| GET | `/api/rates` · `/api/health` | fee table · liveness |
+
+### Deploy the API
+
+Any Python host works — the service is stdlib only, no dependencies.
+
+```bash
+# Fly.io
+fly launch --copy-config --name zerocoffee-org-cn
+fly deploy
+
+# Render — import the repo, it picks up render.yaml
+# Docker
+docker build -t zv . && docker run -p 8099:8099 -v zvdata:/app/data zv
+```
+
+CI (`.github/workflows/api-smoke.yml`) boots the service and exercises every endpoint on each push.

@@ -14,7 +14,7 @@
   const RATES = {
     pcf_site: 28000,        // first-year verification, per site
     surveillance: 12000,    // annual surveillance, per site
-    label_batch: 25,        // per batch label, >= 200 batches
+    label_batch: 40,        // per batch label, verifier share
     baseline: 6000,         // baseline co-signing, per exercise
     grade_site: 4000,       // evidence grade assessment, per site per year
     ledger: 8000,           // ledger integrity, per exercise

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: zerocoffee-api
+    runtime: python
+    plan: free
+    buildCommand: ""
+    startCommand: python server/app.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: ZV_HOST
+        value: 0.0.0.0
+      - key: ZV_PORT
+        value: 10000
+      - key: ZV_ADMIN_TOKEN
+        generateValue: true
+    disk:
+      name: zv-data
+      mountPath: /app/data
+      sizeGB: 1

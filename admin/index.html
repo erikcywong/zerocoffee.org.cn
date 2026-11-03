@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operator console — ZeroCarbon Verify</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0 26px}
+  .kpis .k{background:#fff;padding:20px 22px}
+  .kpis .v{font-size:30px;font-weight:750;letter-spacing:-1px;color:var(--navy);font-family:var(--mono)}
+  .kpis .l{font-size:12.5px;color:var(--gray);margin-top:6px}
+  @media(max-width:800px){.kpis{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="util"><div class="wrap">
+  <span>Operator console · not linked from the public site</span>
+  <span class="badge info" id="modeBadge">…</span>
+  <div class="right"><a href="../index.html">← Site</a></div>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/><path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/><path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg>
+    <b>ZeroCarbon Verify</b><span>operator console</span></a>
+  <nav class="main">
+    <div class="item on"><a href="index.html">Console</a></div>
+    <div class="item"><a href="../certify/index.html">Certify</a></div>
+    <div class="item"><a href="../simulator/index.html">Simulator</a></div>
+    <div class="item"><a href="../registry/index.html">Registry</a></div>
+  </nav>
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="#" id="refresh">Refresh</a><a class="btn btn-primary btn-sm" href="#" id="export">Export JSON</a></div>
+</div></header>
+
+<section style="padding-top:30px">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:0">
+      <div class="eyebrow">Operations</div>
+      <h2>Leads and issued certificates</h2>
+      <p id="storeNote" class="note"></p>
+    </div>
+
+    <div class="kpis">
+      <div class="k"><div class="v" id="k-leads">0</div><div class="l">enquiries</div></div>
+      <div class="k"><div class="v" id="k-certs">0</div><div class="l">certificates issued</div></div>
+      <div class="k"><div class="v" id="k-fees">¥0</div><div class="l">fee value booked</div></div>
+      <div class="k"><div class="v" id="k-labels">0</div><div class="l">batch labels covered</div></div>
+    </div>
+
+    <h3 style="font-size:18px;margin:26px 0 8px">Certification cases</h3>
+    <table class="data" id="certTable">
+      <thead><tr><th>Certificate</th><th>Farm</th><th class="n">Plantlets</th><th class="n">Labels</th><th>Grade</th><th class="n">Fee</th><th>Issued</th></tr></thead>
+      <tbody><tr><td colspan="7" class="note">No cases yet — run one from <a href="../certify/index.html">/certify/</a>.</td></tr></tbody>
+    </table>
+
+    <h3 style="font-size:18px;margin:30px 0 8px">Enquiries</h3>
+    <table class="data" id="leadTable">
+      <thead><tr><th>Ref</th><th>Name</th><th>Company</th><th>Role</th><th>Service</th><th>Received</th></tr></thead>
+      <tbody><tr><td colspan="6" class="note">No enquiries yet — submit the form on <a href="../contact/index.html">/contact/</a>.</td></tr></tbody>
+    </table>
+
+    <div class="note" style="border-left:3px solid #00958f;background:#f4fbfa;padding:14px 18px;margin-top:26px" id="modeBox">
+    </div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap">
+  <div class="bot" style="border:0;margin:0;padding:0">
+    <span>Operator console — data lives in the browser store unless an API is configured.</span>
+    <span><a href="../index.html" style="color:#8ea8c6">back to site</a></span>
+  </div>
+</div></footer>
+
+<script src="../assets/api.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var data = { certs: [], leads: [] };
+
+  function render() {
+    var certs = data.certs, leads = data.leads;
+    $('k-leads').textContent = leads.length;
+    $('k-certs').textContent = certs.length;
+    $('k-fees').textContent = ZV.money(certs.reduce(function (a, c) { return a + (c.fee || 0); }, 0));
+    $('k-labels').textContent = certs.reduce(function (a, c) { return a + (c.batches || 0); }, 0);
+
+    $('certTable').querySelector('tbody').innerHTML = certs.length ? certs.map(function (c) {
+      return '<tr><td class="mono">' + c.id + '</td><td>' + (c.farm || '') + '</td>' +
+        '<td class="n">' + (c.plantlets || 0).toLocaleString() + '</td>' +
+        '<td class="n">' + (c.batches || 0) + '</td>' +
+        '<td>' + (c.grade || '') + '</td>' +
+        '<td class="n">' + ZV.money(c.fee || 0) + '</td>' +
+        '<td class="mono">' + (c.issued || '').slice(0, 10) + '</td></tr>';
+    }).join('') : '<tr><td colspan="7" class="note">No cases yet — run one from <a href="../certify/index.html">/certify/</a>.</td></tr>';
+
+    $('leadTable').querySelector('tbody').innerHTML = leads.length ? leads.map(function (l) {
+      return '<tr><td class="mono">' + l.id + '</td><td>' + (l.name || '') + '</td>' +
+        '<td>' + (l.company || '') + '</td><td>' + (l.role || '') + '</td>' +
+        '<td>' + (l.scope || '') + '</td><td class="mono">' + (l.received || '').slice(0, 16).replace('T', ' ') + '</td></tr>';
+    }).join('') : '<tr><td colspan="6" class="note">No enquiries yet — submit the form on <a href="../contact/index.html">/contact/</a>.</td></tr>';
+  }
+
+  async function load() {
+    var mode = ZV.mode();
+    $('modeBadge').textContent = mode === 'server' ? 'live API' : 'browser store';
+    $('modeBadge').className = 'badge ' + (mode === 'server' ? 'ok' : 'info');
+    $('storeNote').textContent = mode === 'server'
+      ? 'Reading from the verification API. Leads and certificates persist on the server.'
+      : 'No API configured: this console reads the same IndexedDB store the public pages write to. '
+        + 'Data stays in this browser — deploy /server and add ?api=https://… to switch to a shared database.';
+    $('modeBox').innerHTML = mode === 'server'
+      ? '<b>Live API.</b> Point other devices at the same origin to share data.'
+      : '<b>Why this is still "full stack".</b> The browser store implements the same calls as the Python '
+        + 'backend (<code>POST /api/leads</code>, <code>GET /api/certifications</code>). Deploy '
+        + '<code>server/app.py</code> anywhere and open the site with <code>?api=https://your-host</code> — '
+        + 'nothing else changes.';
+    try { data.certs = await ZV.listCerts(); } catch (e) { data.certs = []; }
+    try { data.leads = await ZV.listLeads(); } catch (e) { data.leads = []; }
+    render();
+  }
+
+  $('refresh').addEventListener('click', function (e) { e.preventDefault(); load(); });
+  $('export').addEventListener('click', function (e) {
+    e.preventDefault();
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'zerocarbon-export-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
