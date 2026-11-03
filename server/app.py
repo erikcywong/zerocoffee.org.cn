@@ -173,7 +173,9 @@ def build_certification(d: dict) -> dict:
     batch = max(60, int(d.get("batchSize") or 480))
     grade = d.get("grade") or "B"
     batches = round(plantlets / batch)
-    fee = 28000 + 6000 + 4000 + batches * 40
+    source = d.get("source") if isinstance(d.get("source"), dict) else None
+    rederive = 2000 if source else 0
+    fee = 28000 + 6000 + 4000 + batches * 40 + rederive
     days = sum(w[2] for w in WORKFLOW)
     issued = time.time()
     seq = f"{int(issued) % 100000:05d}"
@@ -190,12 +192,13 @@ def build_certification(d: dict) -> dict:
              "at": time.strftime("%Y-%m-%d", time.localtime(issued - (len(WORKFLOW) - 1 - i) * 2 * 86400))}
             for i, w in enumerate(WORKFLOW)
         ],
+        "source": source,
         "lines": [
             {"k": "PCF verification (year 1)", "v": 28000},
             {"k": "Baseline co-signing", "v": 6000},
             {"k": "Evidence grade assessment", "v": 4000},
             {"k": f"Label review × {batches}", "v": batches * 40},
-        ],
+        ] + ([{"k": "Platform evidence re-derivation", "v": rederive}] if source else []),
     }
 
 

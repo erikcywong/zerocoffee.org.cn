@@ -55,6 +55,35 @@
         hash, and writes it to the register — the same steps and fees that a real engagement would follow.</p>
     </div>
 
+    <h3 style="font-size:20px;letter-spacing:-.4px;margin:8px 0 10px">1 · Platform evidence</h3>
+    <p class="note" style="margin:0 0 14px">
+      The record below is fetched live from <b>www.coffeejev.space</b> — a different origin and a different
+      operator. Nothing about it is trusted: every number is re-derived here before it is attached to a case.
+    </p>
+    <div class="grid-2" style="align-items:start;margin-bottom:34px">
+      <div>
+        <div class="field"><label for="p-label">Published label</label>
+          <select id="p-label"><option value="">loading the platform register…</option></select>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary" id="p-verify" type="button" disabled>Verify against platform</button>
+          <a class="btn btn-ghost" id="p-link" href="#" target="_blank" rel="noopener" style="display:none">Open on CoffeeJeV</a>
+        </div>
+        <p class="hint" id="p-status" style="margin-top:10px"></p>
+      </div>
+      <div>
+        <div class="sim-out" style="background:#fff;border:1px solid var(--line);border-radius:4px;padding:0;overflow:hidden">
+          <table class="data" id="p-checks" style="margin:0">
+            <thead><tr><th style="width:8%">#</th><th style="width:52%">Check</th><th class="n">Expected</th><th class="n">Found</th></tr></thead>
+            <tbody><tr><td colspan="4" class="note" style="padding:16px">Pick a label and press verify.</td></tr></tbody>
+          </table>
+        </div>
+        <div id="p-verdict" style="display:none;margin-top:12px;padding:12px 16px;border-radius:4px;font-size:13.5px"></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;letter-spacing:-.4px;margin:0 0 10px">2 · Run the case</h3>
+
     <div class="grid-2" style="align-items:start">
       <form id="certForm" onsubmit="return false">
         <div class="field"><label for="c-farm">Farm / lot</label>
@@ -122,11 +151,16 @@
 
   $('c-run').addEventListener('click', async function () {
     var btn = this;
+    if (window.__ZV_SOURCE && !window.__ZV_SOURCE.ok) {
+      alert('Refused: the platform record failed verification. A case cannot be raised on evidence that does not re-derive.');
+      return;
+    }
     btn.disabled = true; btn.textContent = 'Running…';
     try {
       var c = await ZV.cert({
         farm: $('c-farm').value, plantlets: +$('c-plants').value,
-        batchSize: +$('c-batch').value, grade: $('c-grade').value
+        batchSize: +$('c-batch').value, grade: $('c-grade').value,
+        source: window.__ZV_SOURCE || null
       });
       $('result').style.display = 'block';
       $('flow').innerHTML = c.workflow.map(function (w, i) {
@@ -144,6 +178,8 @@
           '<span class="k">Hash</span><span class="v">' + c.hash + '</span>' +
           '<span class="k">Issued</span><span class="v">' + c.issued.slice(0, 10) + '</span>' +
           '<span class="k">Valid until</span><span class="v">' + c.expires.slice(0, 10) + '</span>' +
+        (c.source ? '<span class="k">Platform record</span><span class="v">' + c.source.label_id +
+          ' · ' + c.source.hash + (c.source.ok ? ' ✓ ' : ' ✗ ') + c.source.checks.length + '/' + c.source.checks.length + '</span>' : '') +
         '</div><div>' +
           '<div class="tagline" style="margin-bottom:6px">Fee schedule</div>' +
           c.lines.map(function (l) { return '<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid var(--line)"><span>' + l.k + '</span><b class="mono">' + ZV.money(l.v) + '</b></div>'; }).join('') +
@@ -156,6 +192,64 @@
       box.innerHTML = '<div style="padding:20px;color:#9c3a2c">Case failed: ' + e.message + '</div>';
       document.getElementById('result').style.display = 'block';
     } finally { btn.disabled = false; btn.textContent = 'Run certification'; }
+  });
+
+
+  /* ---------------- platform evidence panel ---------------- */
+  var platformDoc = null;
+
+  function renderChecks(v) {
+    var rows = v.checks.map(function (c) {
+      return '<tr><td class="mono">' + c.id + '</td><td>' + c.name +
+        (c.note ? '<div class="note" style="font-size:11.5px">' + c.note + '</div>' : '') + '</td>' +
+        '<td class="n mono">' + c.expected + '</td>' +
+        '<td class="n mono" style="color:' + (c.ok ? '#04726d' : '#9c3a2c') + '">' + c.actual + (c.ok ? ' ✓' : ' ✗') + '</td></tr>';
+    }).join('');
+    document.getElementById('p-checks').querySelector('tbody').innerHTML = rows;
+
+    var box = document.getElementById('p-verdict');
+    box.style.display = 'block';
+    box.style.background = v.ok ? '#f2fbf8' : '#fdf1ef';
+    box.style.border = '1px solid ' + (v.ok ? '#bfe6dc' : '#f0cfc9');
+    box.innerHTML = v.ok
+      ? '<b>' + v.passed + '/' + v.total + ' checks pass.</b> The platform record re-derives from scratch: ' +
+        v.label_id + ' · ' + v.kgco2e_per_unit + ' kgCO₂e/' + 'unit · grade ' + v.grade +
+        '. It may be attached to the case.'
+      : '<b>' + v.passed + '/' + v.total + ' checks pass.</b> This record cannot support a certificate. ' +
+        'A real file would be refused, not qualified.';
+    window.__ZV_SOURCE = v;
+  }
+
+  function selectLabel(idx) {
+    if (!platformDoc) return;
+    var lab = platformDoc.labels[idx];
+    var prev = idx > 0 ? platformDoc.labels[idx - 1] : null;
+    var v = ZV.verifyLabel(lab, prev);
+    document.getElementById('p-link').href = v.url;
+    document.getElementById('p-link').style.display = 'inline-flex';
+    renderChecks(v);
+    // prefill the case from the platform record where it maps cleanly
+    document.getElementById('c-plants').value = Math.round(v.kgco2e_total / v.kgco2e_per_unit) * 1000 || 240000;
+    document.getElementById('c-grade').value = v.grade || 'B';
+  }
+
+  ZV.fetchPlatform().then(function (doc) {
+    platformDoc = doc;
+    var sel = document.getElementById('p-label');
+    sel.innerHTML = doc.labels.map(function (l, i) {
+      return '<option value="' + i + '">' + l.label_id + ' · ' + l.batch + ' · ' + l.grade + ' · ' + l.hash + '</option>';
+    }).join('');
+    var btn = document.getElementById('p-verify');
+    btn.disabled = false;
+    btn.addEventListener('click', function () { selectLabel(+sel.value || 0); });
+    sel.addEventListener('change', function () { selectLabel(+sel.value || 0); });
+    document.getElementById('p-status').textContent =
+      doc.count + ' label(s) in the platform register · generated ' + doc.generated + ' · method ' + doc.method;
+    selectLabel(0);
+  }).catch(function (e) {
+    document.getElementById('p-status').innerHTML =
+      'Could not reach the platform register (' + e.message + '). The case can still run without platform evidence.';
+    document.getElementById('p-label').innerHTML = '<option value="">platform unreachable</option>';
   });
 
   // ?run=1 runs the default case automatically (handy for demos and screenshots)
