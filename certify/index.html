@@ -179,7 +179,7 @@
           '<span class="k">Issued</span><span class="v">' + c.issued.slice(0, 10) + '</span>' +
           '<span class="k">Valid until</span><span class="v">' + c.expires.slice(0, 10) + '</span>' +
         (c.source ? '<span class="k">Platform record</span><span class="v">' + c.source.label_id +
-          ' · ' + c.source.hash + (c.source.ok ? ' ✓ ' : ' ✗ ') + c.source.checks.length + '/' + c.source.checks.length + '</span>' : '') +
+          ' · ' + c.source.hash + (c.source.ok ? ' ✓ ' : ' ✗ ') + c.source.passed + '/' + c.source.total + '</span>' : '') +
         '</div><div>' +
           '<div class="tagline" style="margin-bottom:6px">Fee schedule</div>' +
           c.lines.map(function (l) { return '<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid var(--line)"><span>' + l.k + '</span><b class="mono">' + ZV.money(l.v) + '</b></div>'; }).join('') +
@@ -229,7 +229,11 @@
     document.getElementById('p-link').style.display = 'inline-flex';
     renderChecks(v);
     // prefill the case from the platform record where it maps cleanly
-    document.getElementById('c-plants').value = Math.round(v.kgco2e_total / v.kgco2e_per_unit) * 1000 || 240000;
+    var units = Math.round(v.kgco2e_total / v.kgco2e_per_unit) || 0;
+    if (units) { document.getElementById('c-plants').value = units; }
+    document.getElementById('p-status').textContent =
+      platformDoc.count + ' label(s) in the platform register · generated ' + platformDoc.generated +
+      ' · method ' + platformDoc.method + ' · case scoped to the published batch (' + units + ' plantlets)';
     document.getElementById('c-grade').value = v.grade || 'B';
   }
 
@@ -254,7 +258,16 @@
 
   // ?run=1 runs the default case automatically (handy for demos and screenshots)
   if (new URLSearchParams(location.search).get('run') === '1') {
-    setTimeout(function () { document.getElementById('c-run').click(); }, 60);
+    var waited = 0;
+    var iv = setInterval(function () {
+      waited += 100;
+      // wait for the platform record so the case carries the attestation,
+      // but never block the demo if the platform is unreachable
+      if (window.__ZV_SOURCE || waited > 8000) {
+        clearInterval(iv);
+        document.getElementById('c-run').click();
+      }
+    }, 100);
   }
 })();
 </script>
