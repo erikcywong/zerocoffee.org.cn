@@ -1,70 +1,82 @@
-# zerocoffee.org — 零碳核云 / ZeroCarbon Verify
+# ZeroCarbon Verify — full-stack corporate site
 
-面向咖啡供应链的独立核证机构（conformity assessment body）。拟设于香港，专做
-**产品碳足迹核证、碳标签签发、数据与账本保证**。
+Western-style assurance brand site (reference: dnv.com) with a working backend.
+Static front-end + Python API. Zero build step, zero dependencies.
 
-> 本仓库是**设立与认可准备文件**，不是认可证书。状态：设立中 · 未获认可。
+## Run it
 
-## 为什么需要一家独立的核证机构
+```powershell
+cd "D:\DeepSeek Harness\Forecast AI bubble\zerocarbon-site"
+python server\app.py
+# open http://127.0.0.1:8099
+```
 
-平台同时签发标签、收买方溢价、收保险分成时，它的数字会失去证据力 —— 付费方即受益方。
-所以把「计算」与「核证」拆成两个主体：
+The server serves the whole site **and** the API from one port, so the quote calculator and the
+contact form work end to end.
 
-| 角色 | 做什么 | 不做什么 |
+Environment:
+
+| Variable | Default | Purpose |
 |---|---|---|
-| **CoffeeJeV** | 判断层、IoT 设备、账本、碳计算 | 不签发标签、不决定方法学版本 |
-| **零碳核云** | 核证、标签签发、登记簿、方法学发布 | 不卖软件/硬件、不做咨询、不持股被核证方 |
+| `ZV_PORT` | 8099 | listen port |
+| `ZV_HOST` | 127.0.0.1 | bind address |
+| `ZV_ADMIN_TOKEN` | `dev-token-change-me` | `GET /api/leads` auth |
 
-两者之间只有一份**方法学采用协议**，无股权关系。
-
-## 站点结构
-
-```
-index.html          机构：是什么、核什么、不做什么
-conditions.html     设立条件：法律/治理/能力/计量/认可/责任六层 + 六样缺一不可
-services.html       12 项服务、交付物、收费、周期、责任
-accreditation.html  认可路线：HKAS 17065 + 14065，12 个月时间表
-governance.html     治理、利益冲突、咨询禁令、申诉、记录保存
-registry.html       已签发标签登记簿（含复算入口与撤销区）
-style.css           「纸张」质感：核证机构不能长得像卖方的产品
-```
-
-纯静态、无外部请求、无构建步骤。直接打开 `index.html` 即可。
-
-## 部署
-
-GitHub Pages：Settings → Pages → Branch `main` / root。
-当前地址：<https://erikcywong.github.io/zerocoffee.org/>
-
-自定义域名 `zerocoffee.org` 需在域名商添加：
+## Structure
 
 ```
-A     @    185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153
-CNAME www  erikcywong.github.io
+index.html              home — hero, stats, three services, process, insights, CTA
+services/index.html     12 services in 3 classes, fees, process, live quote calculator
+industries/index.html   coffee & agri (primary), food, manufacturing, finance
+platform/index.html     registry, browser verification, API reference
+about/index.html        independence, accreditation status, structure, filing links
+registry/index.html     issued labels, how to verify, revocations, method versions
+insights/index.html     the six arguments behind the method
+contact/index.html      lead form wired to POST /api/leads
+filing/                 the Chinese establishment file (conditions, fees, governance…)
+assets/site.css         design system — navy / white / cards / 1240px grid
+assets/site.js          quote model, lead capture, nav highlight
+server/app.py           stdlib HTTP server: site + /api/*
+data/leads.jsonl        created on first lead
 ```
 
-## 关键数字
+## API
 
-| 项目 | 值 | 口径 |
+| Method | Path | Notes |
 |---|---|---|
-| 首次核证 | ¥28,000 / 场 | 6 人日 × ¥3,800 + 保险与管理费 |
-| 年度监督 | ¥12,000 / 场 | 2 人日 |
-| 标签审阅 | ¥25 / 张（≥200 张） | 批量 |
-| 基线共签 | ¥6,000 / 次 | — |
-| 数据品质背书 | ¥4,000 / 场 / 年 | — |
-| 周期 | 10 个工作日 | 受理 2 + 文件 3 + 核查 2 + 复核 3 |
+| POST | `/api/quote` | deterministic model `zv-quote-v1`, mirrored in `assets/site.js` |
+| POST | `/api/leads` | validates name/company/email/consent; returns `ZV-YYYYMMDD-XXXXXX` |
+| GET | `/api/leads?token=…` | admin list |
+| GET | `/api/rates` | published fee table |
+| GET | `/api/health` | liveness + counters |
 
-> 方法学文件中旧锚点「核证费 ¥15,000/场」不足以支撑 ISO 14065 级别核证，
-> 已在 `services.html` 明确改为 28,000 并给出算法。
+```powershell
+curl http://127.0.0.1:8099/api/quote -H "Content-Type: application/json" `
+  -d '{"sites":1,"batches":500,"addons":["baseline","grade"],"travel_days":3}'
+# → {"currency":"CNY","lines":[…],"total":63700,"model":"zv-quote-v1"}
+```
 
-## 与 CoffeeJeV 的接口
+## Deploy
 
-- 方法学：`CJV-MTH-1.0`（12 条规则，哈希 `9b12abef`），发布权在零碳核云
-- 标签：编号 `CJ-CN-<年>-<批次>-<hash4>`，验证页 `https://www.coffeejev.space/v/?id=<编号>`
-- 数据权利：原始数据归种植者，去标识聚合基准归零碳核云
+**Static part** → GitHub Pages (`zerocoffee.org` repo, root). Everything except the API works there;
+the contact form detects an unreachable API and falls back to a prefilled email draft.
 
-## 边界
+**API** → any Python host (Fly.io / Render / a VPS), then point the site at it:
 
-- 未获认可前，文书只称「核证/查证」，不使用「认证」字样、不出现认证标志。
-- 不出碳信用、不做抵消、不登记任何可交易资产。
-- 所有价格与周期为设计锚点，未获市场验证。
+```
+https://site/?api=https://api.example.com     # stored in localStorage
+```
+
+**Pricing model lives in two places** (`assets/site.js` `RATES` and `server/app.py` `RATES`).
+They are deliberately identical; change both or neither.
+
+## Design notes
+
+- Reference is dnv.com: navy `#00205b`, teal accent `#00958f`, white body, 1240px grid,
+  thin 1px borders, card matrices, no shadows except on hover.
+- The Chinese filing pages keep their paper aesthetic on purpose — the corporate site is the
+  shop window, the filing is the record.
+- Every page carries an "Accreditation in progress — not yet accredited" badge in the utility bar.
+  Do not remove it: a buyer who checks the HKAS directory and finds nothing is worse off than
+  one who reads the caveat.
+- No carbon-credit language anywhere. Labels are disclosures, not tradable assets.

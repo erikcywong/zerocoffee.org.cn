@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital platform — ZeroCarbon Verify</title>
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="util"><div class="wrap">
+  <span>Independent verification body · Hong Kong</span>
+  <span class="badge warn">Accreditation in progress — not yet accredited</span>
+  <div class="right"><a href="../filing/index.html">中文版</a><a href="../registry/index.html">Label registry</a></div>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/><path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/><path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg>
+    <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span></a>
+  <nav class="main">
+    <div class="item"><a href="../services/index.html">Services</a></div>
+    <div class="item"><a href="../industries/index.html">Industries</a></div>
+    <div class="item on"><a href="index.html">Digital platform</a></div>
+    <div class="item"><a href="../insights/index.html">Insights</a></div>
+    <div class="item"><a href="../about/index.html">About</a></div>
+  </nav>
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../registry/index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a></div>
+</div></header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Digital platform</div>
+      <h2>A label you can check without trusting us</h2>
+      <p>The registry, the hash and the recomputation routine are public. Our server is a convenience, not a
+        dependency — if it disappears, a printed label still verifies.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h7v6H4zM13 6h7v6h-7zM4 14h7v6H4zM13 14h7v6h-7z"/></svg></div>
+        <div class="tagline">Registry</div>
+        <h3>Public label registry</h3>
+        <p>Every issued label gets an ID, a hash, an issue date and a revocation slot. Revoked labels stay
+          listed with the date and reason.</p>
+        <a class="more" href="../registry/index.html">Open the registry →</a>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg></div>
+        <div class="tagline">Verification</div>
+        <h3>Recompute in the browser</h3>
+        <p>The verification page re-derives <code>fnv(prev + payload)</code> locally. No data leaves the page;
+          the check does not need a network round trip.</p>
+        <a class="more" href="https://www.coffeejev.space/v/" target="_blank" rel="noopener">Verify a label →</a>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M8 4h8l4 4v12H4V4z"/><path d="M8 12h8M8 16h5"/></svg></div>
+        <div class="tagline">API</div>
+        <h3>Machine-readable evidence</h3>
+        <p>Quote, lead and registry endpoints, JSON over HTTPS. A buyer's system can pull the label record
+          directly instead of scanning a PDF.</p>
+        <a class="more" href="#api">API reference →</a>
+      </div>
+    </div>
+
+    <h2 style="margin-top:54px;font-size:26px;letter-spacing:-.6px">How a label is frozen</h2>
+    <div class="rows">
+      <div class="row-item"><span class="n">01</span><span><b>Compute the payload</b><span><code>batch | total_kgCO2e | per_unit | grade</code></span></span><span></span></div>
+      <div class="row-item"><span class="n">02</span><span><b>Chain it</b><span><code>hash = fnv(prev_hash + payload)</code> — the previous label's hash is committed, so the set is append-only</span></span><span></span></div>
+      <div class="row-item"><span class="n">03</span><span><b>Publish</b><span>Registry entry, public page, QR on the physical label</span></span><span></span></div>
+      <div class="row-item"><span class="n">04</span><span><b>Re-derive on demand</b><span>Anyone can recompute; a mismatch is visible to them, not to us first</span></span><span></span></div>
+    </div>
+
+    <h2 id="api" style="margin-top:54px;font-size:26px;letter-spacing:-.6px">API reference</h2>
+    <table class="data">
+      <thead><tr><th style="width:12%">Method</th><th style="width:26%">Path</th><th style="width:62%">Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>POST</td><td><code>/api/quote</code></td><td>Deterministic fee model — the same one used by the site calculator</td></tr>
+        <tr><td>POST</td><td><code>/api/leads</code></td><td>Validated enquiry capture; returns a reference ID</td></tr>
+        <tr><td>GET</td><td><code>/api/leads?token=…</code></td><td>Lead list (admin token required)</td></tr>
+        <tr><td>GET</td><td><code>/api/rates</code></td><td>Published fee table</td></tr>
+        <tr><td>GET</td><td><code>/api/health</code></td><td>Liveness and counters</td></tr>
+      </tbody>
+    </table>
+    <div class="out" style="font-family:ui-monospace">$ curl -s http://127.0.0.1:8099/api/quote \
+    -H 'Content-Type: application/json' \
+    -d '{"sites":1,"batches":500,"addons":["baseline","grade"],"travel_days":3}'
+
+{"currency":"CNY","lines":[{"label":"Product carbon footprint (year 1)","qty":1,"unit":"site","amount":28000}, … ],
+ "total":63700,"model":"zv-quote-v1"}</div>
+  </div>
+</section>
+
+<div class="band"><div class="wrap">
+  <div><h2>Want the API in your own procurement system?</h2><p>We publish the schema and the model. Nothing
+    about the fee is a secret; the verification is what you are buying.</p></div>
+  <a class="btn btn-white" href="../contact/index.html">Talk to us</a>
+</div></div>
+
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Independent verification body for carbon claims in agricultural supply chains. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
+    <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a></div>
+    <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../filing/conditions.html">Conditions of establishment</a><a href="../filing/governance.html">Impartiality</a><a href="../contact/index.html">Contact</a></div>
+    <div><h4>Platform</h4><a href="index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../filing/services.html">Fee schedule</a><a href="../filing/index.html">中文版（设立文件）</a></div>
+  </div>
+  <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request a quote — ZeroCarbon Verify</title>
+<meta name="description" content="Tell us about the batch and the claim. Scoping is free.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<div class="util">
+  <div class="wrap">
+    <span>Independent verification body · Hong Kong</span>
+    <span class="badge warn">Accreditation in progress — not yet accredited</span>
+    <div class="right"><a href="../filing/index.html">中文版</a><a href="../registry/index.html">Label registry</a></div>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../index.html">
+      <svg class="mark" viewBox="0 0 40 40" fill="none">
+        <rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/>
+        <path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/>
+        <path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+      </svg>
+      <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span>
+    </a>
+    <nav class="main">
+      <div class="item"><a href="../services/index.html">Services</a></div>
+      <div class="item"><a href="../industries/index.html">Industries</a></div>
+      <div class="item"><a href="../platform/index.html">Digital platform</a></div>
+      <div class="item"><a href="../insights/index.html">Insights</a></div>
+      <div class="item"><a href="../about/index.html">About</a></div>
+    </nav>
+    <div class="head-cta">
+      <a class="btn btn-ghost btn-sm" href="../registry/index.html">Verify a label</a>
+      <a class="btn btn-primary btn-sm" href="index.html">Request a quote</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Request a quote</div>
+      <h2>Tell us the claim you need to make</h2>
+      <p>Scoping is free. We will reply within two working days with either an indicative fee and a scope
+        note, or a straight answer that the data cannot support the claim yet.</p>
+    </div>
+
+    <div class="grid-2" style="align-items:start">
+      <form id="leadForm" onsubmit="return false">
+        <div class="field">
+          <label for="f-name">Name *</label>
+          <input id="f-name" name="name" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="f-company">Company *</label>
+          <input id="f-company" name="company" required autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="f-email">Work email *</label>
+          <input id="f-email" name="email" type="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="f-role">Your role</label>
+          <select id="f-role" name="role">
+            <option value="grower">Grower / farm</option>
+            <option value="cooperative">Cooperative / nursery</option>
+            <option value="trader">Trader / exporter</option>
+            <option value="buyer" selected>Buyer / importer</option>
+            <option value="platform">Platform / software</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-scope">Service of interest</label>
+          <select id="f-scope" name="scope">
+            <option value="pcf">Product carbon footprint verification</option>
+            <option value="label">Carbon label issuance</option>
+            <option value="assurance">Data / ledger assurance</option>
+            <option value="baseline">Baseline co-signing</option>
+            <option value="mrv">MRV system audit</option>
+            <option value="unsure">Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-message">What are you trying to claim, and to whom?</label>
+          <textarea id="f-message" name="message" placeholder="e.g. a low-carbon label on 240,000 plantlets a year for an EU importer; we have hourly meter data but no calibration certificates."></textarea>
+        </div>
+        <div class="field" style="flex-direction:row;align-items:flex-start;gap:10px">
+          <input id="f-consent" type="checkbox" style="width:auto;margin-top:4px">
+          <label for="f-consent" style="font-weight:500;font-size:13px;color:#3c4a59">
+            I agree that ZeroCarbon Verify may store this enquiry and contact me about it.
+          </label>
+        </div>
+        <button class="btn btn-primary" type="button" id="leadSend">Send enquiry</button>
+        <div id="leadOut" class="out" style="display:none"></div>
+      </form>
+
+      <div>
+        <div class="card" style="margin-bottom:18px">
+          <div class="tagline">What happens next</div>
+          <ol style="margin:8px 0 0 18px;font-size:14px;color:#3c4a59;line-height:1.75">
+            <li>We read the enquiry and check whether the claim is verifiable at all.</li>
+            <li>You get a scope note: boundary, functional unit, what data we need.</li>
+            <li>Only then do we send a fee. Scoping never costs anything.</li>
+          </ol>
+        </div>
+        <div class="card" style="margin-bottom:18px">
+          <div class="tagline">Contact</div>
+          <p style="font-size:14px;color:#3c4a59">
+            ZeroCarbon Verify (HK) Limited<br>
+            Hong Kong · remote-first<br>
+            Response within 2 working days
+          </p>
+        </div>
+        <div class="note" style="border-left:3px solid #00205b;background:#f5f7fa;padding:14px 18px">
+          We will tell you what we cannot verify. If a baseline is not co-signed, if a factor is not
+          published, if the meters are not calibrated — you will hear it in the scope note, not after
+          the invoice.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b>
+        <p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Independent verification body for carbon claims in agricultural supply chains. Hong Kong.</p>
+        <p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
+      <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a></div>
+      <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../filing/conditions.html">Conditions of establishment</a><a href="../filing/governance.html">Impartiality</a><a href="index.html">Contact</a></div>
+      <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../filing/services.html">Fee schedule</a><a href="../filing/index.html">中文版（设立文件）</a></div>
+    </div>
+    <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

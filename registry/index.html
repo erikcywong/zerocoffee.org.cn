@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Label registry — ZeroCarbon Verify</title>
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="util"><div class="wrap">
+  <span>Independent verification body · Hong Kong</span>
+  <span class="badge warn">Accreditation in progress — not yet accredited</span>
+  <div class="right"><a href="../filing/index.html">中文版</a><a href="index.html">Label registry</a></div>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/><path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/><path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg>
+    <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span></a>
+  <nav class="main">
+    <div class="item"><a href="../services/index.html">Services</a></div>
+    <div class="item"><a href="../industries/index.html">Industries</a></div>
+    <div class="item"><a href="../platform/index.html">Digital platform</a></div>
+    <div class="item"><a href="../insights/index.html">Insights</a></div>
+    <div class="item"><a href="../about/index.html">About</a></div>
+  </nav>
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a></div>
+</div></header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Public registry</div>
+      <h2>Every label we issue, including the ones we revoke</h2>
+      <p>A registry that only lists valid certificates is marketing. This one keeps the withdrawn entries with
+        their date and reason, because that is where the evidence value is.</p>
+    </div>
+
+    <table class="data">
+      <thead><tr>
+        <th style="width:24%">Label ID</th><th style="width:14%">Batch</th><th style="width:12%" class="n">kgCO₂e / unit</th>
+        <th style="width:10%">Grade</th><th style="width:16%">Method</th><th style="width:24%">Verify</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><b>CJ-CN-2026-0712-63E7</b><div class="note" style="font-family:ui-monospace">hash 63e7b24d · prev genesis</div></td>
+          <td>AP-0712<div class="note">480 plantlets · PuEr-01</div></td>
+          <td class="n">0.195</td>
+          <td><span class="badge ok">B</span></td>
+          <td><code>CJV-MTH-1.0</code><div class="note">2026-11-03</div></td>
+          <td><a href="https://www.coffeejev.space/v/?id=CJ-CN-2026-0712-63E7" target="_blank" rel="noopener">Recompute in browser →</a>
+            <div class="note">Issued by ZeroCarbon Verify (establishment stage). Not usable for compliance.</div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 style="margin-top:50px;font-size:26px;letter-spacing:-.6px">How to check a label yourself</h2>
+    <div class="rows">
+      <div class="row-item"><span class="n">01</span><span><b>Scan the QR on the label</b><span>It resolves to <code>/v/?id=&lt;label id&gt;</code></span></span><span></span></div>
+      <div class="row-item"><span class="n">02</span><span><b>The page recomputes the hash locally</b><span><code>fnv(prev + batch|total|per_unit|grade)</code> — no server call needed</span></span><span></span></div>
+      <div class="row-item"><span class="n">03</span><span><b>Then it checks the arithmetic</b><span>Line items must sum to the declared total, and the declared grade must match the metered share</span></span><span></span></div>
+      <div class="row-item"><span class="n">04</span><span><b>Mismatch is shown in red</b><span>To us last, to the reader first</span></span><span></span></div>
+    </div>
+
+    <h2 style="margin-top:50px;font-size:26px;letter-spacing:-.6px">Revocations</h2>
+    <table class="data">
+      <thead><tr><th style="width:24%">Label ID</th><th style="width:16%">Date</th><th style="width:36%">Reason</th><th style="width:24%">Effect</th></tr></thead>
+      <tbody><tr><td colspan="4" class="note">No revocations to date.</td></tr></tbody>
+    </table>
+
+    <h2 style="margin-top:50px;font-size:26px;letter-spacing:-.6px">Method versions</h2>
+    <table class="data">
+      <thead><tr><th style="width:26%">Method</th><th style="width:16%">Effective</th><th style="width:16%" class="n">Rules</th><th style="width:20%">Hash</th><th style="width:22%">Status</th></tr></thead>
+      <tbody><tr><td><code>CJV-MTH-1.0</code></td><td>2026-11-03</td><td class="n">12</td><td><code>9b12abef</code></td><td><span class="badge ok">current</span></td></tr></tbody>
+    </table>
+    <p class="note" style="margin-top:14px">A method change ships a new version. Labels keep pointing at the
+      version they were issued under; nothing is silently recomputed.</p>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Independent verification body for carbon claims in agricultural supply chains. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
+    <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a></div>
+    <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../filing/conditions.html">Conditions of establishment</a><a href="../filing/governance.html">Impartiality</a><a href="../contact/index.html">Contact</a></div>
+    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="index.html">Label registry</a><a href="../filing/services.html">Fee schedule</a><a href="../filing/index.html">中文版（设立文件）</a></div>
+  </div>
+  <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
