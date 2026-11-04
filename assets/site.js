@@ -161,7 +161,25 @@
     });
   }
 
+  function bindNav() {
+    const btn = document.getElementById('navToggle');
+    const drawer = document.getElementById('navDrawer');
+    if (!btn || !drawer) return;
+    const close = () => { drawer.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = drawer.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', e => {
+      if (!drawer.contains(e.target) && e.target !== btn) close();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 1180) close(); });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    bindNav();
     bindQuote();
     bindLead();
     markCurrentNav();

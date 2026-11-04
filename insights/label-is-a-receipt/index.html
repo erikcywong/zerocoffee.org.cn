@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A label is a receipt, not a certificate — ZeroCarbon Verify</title>
+<meta name="description" content="A certificate says somebody approved you. A label should say what was measured, by whom, against which rules — and let anyone recheck it.">
+<link rel="canonical" href="https://zerocoffee.org.cn/insights/label-is-a-receipt/">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<div class="util"><div class="wrap">
+  <span>Independent verification body · Hong Kong</span>
+  <span class="badge warn">Accreditation in progress — not yet accredited</span>
+  <div class="right"><a href="../../filing/index.html">中文版</a><a href="../../registry/index.html">Label registry</a></div>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../../index.html">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/><path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/><path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg>
+    <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span></a>
+  <nav class="main">
+    <div class="item"><a href="../../services/index.html">Services</a></div>
+    <div class="item"><a href="../../industries/index.html">Industries</a></div>
+    <div class="item"><a href="../../platform/index.html">Digital platform</a></div>
+    <div class="item"><a href="../../simulator/index.html">Simulator</a></div>
+    <div class="item on"><a href="../../insights/index.html">Insights</a></div>
+    <div class="item"><a href="../../about/index.html">About</a></div>
+    <div class="item"><a href="../../certify/index.html">Certify</a></div>
+    
+  </nav>
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../../registry/index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../../contact/index.html">Request a quote</a><button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+  <div class="nav-drawer" id="navDrawer"><div class="wrap inner">
+      <a href="../../services/index.html">Services</a>
+      <a href="../../industries/index.html">Industries</a>
+      <a href="../../platform/index.html">Digital platform</a>
+      <a href="../../simulator/index.html">Simulator</a>
+      <a href="../../insights/index.html">Insights</a>
+      <a href="../../about/index.html">About</a>
+      <a href="../../certify/index.html">Certify</a>
+      <div class="util-links"><a href="../../registry/index.html">Verify a label</a><a href="../../contact/index.html">Request a quote</a><a href="../../admin/index.html">Operator console</a><a href="../../filing/index.html">中文版</a></div>
+  </div></div>
+</header>
+<div class="crumb"><div class="wrap"><a href="../../index.html">Home</a><span class="sep">/</span><a href="../index.html">Insights</a><span class="sep">/</span><span class="here">Labels</span></div></div>
+<section>
+  <div class="wrap">
+<div class="art">
+<div class="eyebrow">Labels · verification</div>
+<h1 style="font-size:36px;letter-spacing:-1.1px;margin:10px 0 12px">A label is a receipt, not a certificate</h1>
+<p class="lead">A certificate says somebody approved you. A label should say what was measured, by whom, against which rules — and let anyone recheck it.</p>
+<div class="note" style="font-family:var(--mono);font-size:11.5px;letter-spacing:.4px;color:var(--gray);border:0;padding:0 0 18px;margin:0 0 6px;border-bottom:1px solid var(--line)">ZERO CARBON VERIFY · ESTABLISHMENT NOTE · 5 MIN READ</div>
+<p class="lead">Most carbon labels are decoration with a logo. They assert a conclusion and withhold the working, which makes them impossible to audit and trivial to fake.</p>
+<h2>What a label actually contains</h2>
+<p>The labels we issue carry fourteen fields and a hash. The fields are the claim; the hash is the mechanism that stops the claim being edited after the fact.</p>
+<table class="data"><thead><tr><th>Field group</th><th>What it holds</th><th>Why it is there</th></tr></thead><tbody><tr><td>Identity</td><td>label id, batch, issue date, expiry</td><td>Can be tied to physical goods</td></tr><tr><td>Method</td><td>version, hash, boundary, GWP set</td><td>Two labels are comparable only on the same method</td></tr><tr><td>Result</td><td>per-unit, total, baseline, reduction</td><td>The number and the denominator</td></tr><tr><td>Quality</td><td>metered share, grade, interval</td><td>How much is measured rather than assumed</td></tr><tr><td>Provenance</td><td>verifier, status, liabilities</td><td>Who signed and what they are allowed to claim</td></tr></tbody></table>
+<h2>The hash is the point</h2>
+<p>Each label commits to its payload and to the previous label's hash:</p>
+<div class="out" style="font-family:var(--mono);font-size:13px;line-height:1.9">hash = fnv( prev_hash + batch | total | per_unit | grade )</div>
+<p>That structure makes the register <b>append-only</b>. You cannot quietly revise a number without breaking every label after it, and anyone with the published fields can recompute the chain themselves. Our own server is a convenience, not an authority.</p>
+<h2>What this is not</h2>
+<ul><li><b>Not a carbon credit.</b> Nothing on our labels is tradable, and we will not describe it as an offset.</li><li><b>Not an accreditation.</b> Until the body is accredited, every document says so.</li><li><b>Not a quality mark.</b> A low-carbon plantlet can still be a bad plantlet. Different question, different liability.</li></ul>
+<h2>Try it on the register</h2>
+<p>The verification page recomputes the chain in the browser, with no server call. If you change a digit in the payload, the check turns red — which is the only demonstration of integrity that is worth anything.</p>
+<div style="margin:36px 0 8px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" href="../../contact/index.html">Talk to us</a><a class="btn btn-ghost" href="../index.html">← All insights</a></div>
+<p class="note" style="margin-top:26px">This note describes our method and commercial position. It is not a verification statement and carries no assurance.</p>
+</div>
+  </div>
+</section>
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Independent verification body for carbon claims in agricultural supply chains. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
+    <div><h4>Services</h4><a href="../../services/index.html#pcf">Product carbon footprint</a><a href="../../services/index.html#label">Carbon labels</a><a href="../../services/index.html#assurance">Data assurance</a><a href="../../services/index.html#baseline">Baseline co-signing</a></div>
+    <div><h4>Company</h4><a href="../../about/index.html">About</a><a href="../../filing/conditions.html">Conditions of establishment</a><a href="../../filing/governance.html">Impartiality</a><a href="../../contact/index.html">Contact</a></div>
+    <div><h4>Platform</h4><a href="../../platform/index.html">Digital platform</a><a href="../../registry/index.html">Label registry</a><a href="../../simulator/index.html">Revenue simulator</a><a href="../../filing/index.html">中文版（设立文件）</a></div>
+  </div>
+  <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
+</div></footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

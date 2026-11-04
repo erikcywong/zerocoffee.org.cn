@@ -201,6 +201,85 @@ table.data td.n{text-align:right;font-family:var(--mono);white-space:nowrap;colo
 @media (max-width:640px){
   .grid-3,.grid-4,.grid-2{grid-template-columns:1fr}
   header.site .wrap{height:auto;padding-top:12px;padding-bottom:12px;flex-wrap:wrap;gap:12px}
-  .head-cta{width:100%}
+  .head-cta{width:auto;margin-left:auto}
+  .brand span{display:none}
   .util .wrap{height:auto;padding-top:8px;padding-bottom:8px;flex-wrap:wrap;gap:10px}
+}
+
+
+/* ---------- mobile navigation (the nav is never hidden without a replacement) ---------- */
+.nav-toggle{display:none;align-items:center;justify-content:center;width:38px;height:38px;
+  border:1px solid var(--line);border-radius:4px;background:#fff;cursor:pointer;padding:0}
+.nav-toggle svg{width:18px;height:18px;stroke:var(--navy);stroke-width:2;fill:none;stroke-linecap:round}
+.nav-toggle:hover{background:var(--soft)}
+.nav-drawer{display:none;position:absolute;left:0;right:0;top:100%;background:#fff;
+  border-top:1px solid var(--line);box-shadow:0 18px 34px rgba(0,20,50,.12);z-index:120}
+.nav-drawer.open{display:block}
+.nav-drawer .inner{padding:14px 0 20px}
+.nav-drawer a{display:block;padding:11px 4px;font-size:15px;font-weight:600;color:var(--ink);
+  border-bottom:1px solid var(--line)}
+.nav-drawer a:last-child{border-bottom:0}
+.nav-drawer a:hover{color:var(--teal);text-decoration:none}
+.nav-drawer .util-links{display:flex;gap:16px;padding:14px 4px 0;font-size:12.5px}
+.nav-drawer .util-links a{border:0;padding:0;font-weight:600;color:var(--gray)}
+@media (max-width:1180px){
+  .nav-toggle{display:inline-flex}
+  .head-cta .btn-ghost{display:none}
+}
+@media (max-width:640px){
+  .head-cta{gap:8px}
+  .head-cta .btn-primary{display:none}
+}
+
+/* ---------- breadcrumb ---------- */
+.crumb{border-bottom:1px solid var(--line);background:#fff}
+.crumb .wrap{display:flex;align-items:center;gap:8px;height:42px;font-size:12.5px;color:var(--gray);
+  overflow-x:auto;white-space:nowrap}
+.crumb a{color:var(--gray);font-weight:600}
+.crumb a:hover{color:var(--teal);text-decoration:none}
+.crumb .sep{opacity:.5}
+.crumb .here{color:var(--ink);font-weight:700}
+
+/* ---------- long-form article / industry typography ---------- */
+.art{max-width:820px}
+.art h2{font-size:24px;letter-spacing:-.5px;margin:38px 0 10px;color:var(--navy)}
+.art h3{font-size:18px;letter-spacing:-.3px;margin:26px 0 8px;color:var(--ink)}
+.art p{font-size:15px;line-height:1.8;color:#3c4a59;margin:0 0 14px}
+.art ul,.art ol{margin:0 0 16px 20px;font-size:15px;line-height:1.8;color:#3c4a59}
+.art li{margin-bottom:7px}
+.art code{font-family:var(--mono);font-size:13px;background:var(--soft);padding:2px 5px;border-radius:3px}
+.art table.data{font-size:13.5px}
+.art .lead{font-size:17px;line-height:1.7;color:#26313d}
+.chiprow{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin:26px 0 34px;flex-wrap:wrap}
+.chiprow .c{background:#fff;padding:16px 20px;flex:1 1 180px}
+.chiprow .v{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--navy);letter-spacing:-.6px}
+.chiprow .k{font-size:12px;color:var(--gray);margin-top:4px}
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line);padding:14px 0}
+.faq summary{cursor:pointer;font-weight:650;font-size:14.5px;color:var(--ink);list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:before{content:"+";font-family:var(--mono);color:var(--teal);margin-right:10px}
+.faq details[open] summary:before{content:"–"}
+.faq p{margin:10px 0 0 24px;font-size:14px;color:#3c4a59;line-height:1.75}
+.related{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+@media(max-width:800px){.related{grid-template-columns:1fr}}
+
+
+/* ---------- standalone eyebrow (outside .sec-head / .hero) ---------- */
+.eyebrow{font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);
+  font-weight:700;margin-bottom:10px}
+
+/* ---------- the utility bar must wrap, or it widens the whole document on phones ---------- */
+.util .wrap{flex-wrap:wrap;height:auto;min-height:38px;padding-top:6px;padding-bottom:6px;row-gap:2px}
+.util .right{margin-left:auto}
+
+/* ---------- four-up card row for the industry index ---------- */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media (max-width:1100px){.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.grid-4{grid-template-columns:1fr}}
+
+/* ---------- keep long tables inside the viewport ---------- */
+@media (max-width:700px){
+  .art table.data,table.data{display:block;overflow-x:auto;white-space:nowrap}
+  .chiprow .c{flex:1 1 100%}
 }

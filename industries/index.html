@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Industries — ZeroCarbon Verify</title>
+<meta name="description" content="Four sectors, what is verifiable in each, and how the evidence grades are reached.">
+<link rel="canonical" href="https://zerocoffee.org.cn/industries/">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
@@ -18,81 +20,63 @@
     <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span></a>
   <nav class="main">
     <div class="item"><a href="../services/index.html">Services</a></div>
-    <div class="item on"><a href="index.html">Industries</a></div>
+    <div class="item on"><a href="../industries/index.html">Industries</a></div>
     <div class="item"><a href="../platform/index.html">Digital platform</a></div>
+    <div class="item"><a href="../simulator/index.html">Simulator</a></div>
     <div class="item"><a href="../insights/index.html">Insights</a></div>
     <div class="item"><a href="../about/index.html">About</a></div>
-  <div class="item"><a href="../certify/index.html">Certify</a></div>
+    <div class="item"><a href="../certify/index.html">Certify</a></div>
+    
   </nav>
-  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../registry/index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a></div>
-</div></header>
-
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../registry/index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a><button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+  <div class="nav-drawer" id="navDrawer"><div class="wrap inner">
+      <a href="../services/index.html">Services</a>
+      <a href="../industries/index.html">Industries</a>
+      <a href="../platform/index.html">Digital platform</a>
+      <a href="../simulator/index.html">Simulator</a>
+      <a href="../insights/index.html">Insights</a>
+      <a href="../about/index.html">About</a>
+      <a href="../certify/index.html">Certify</a>
+      <div class="util-links"><a href="../registry/index.html">Verify a label</a><a href="../contact/index.html">Request a quote</a><a href="../admin/index.html">Operator console</a><a href="../filing/index.html">中文版</a></div>
+  </div></div>
+</header>
+<div class="crumb"><div class="wrap"><a href="../index.html">Home</a><span class="sep">/</span><span class="here">Industries</span></div></div>
 <section>
   <div class="wrap">
-    <div class="sec-head">
+<div class="sec-head">
       <div class="eyebrow">Industries</div>
       <h2>Where a verified gram of CO₂e changes a decision</h2>
       <p>We start where the evidence chain is already instrumented. Elsewhere we say no, or we start with a
         baseline study before promising a label.</p>
     </div>
+    <div class="grid-4" style="margin-bottom:34px"><a class="card" href="coffee/index.html" style="text-decoration:none;color:inherit"><div class="tagline">Primary focus</div><h3>Coffee & agriculture</h3><p>Where the meter already exists, so the footprint can be graded rather than estimated. Line items, boundary and a worked 240,000-plantlet example.</p><span class="more">Read the sector note →</span></a><a class="card" href="food-beverage/index.html" style="text-decoration:none;color:inherit"><div class="tagline">Supply chain</div><h3>Food & beverage</h3><p>Replacing spend-based averages with supplier-level primary data, and fixing allocation before the numbers are known.</p><span class="more">Read the sector note →</span></a><a class="card" href="manufacturing/index.html" style="text-decoration:none;color:inherit"><div class="tagline">Industrial</div><h3>Manufacturing</h3><p>Line-level energy, process heat, compressed air and the allocation rule that decides who carries which share.</p><span class="more">Read the sector note →</span></a><a class="card" href="finance-insurance/index.html" style="text-decoration:none;color:inherit"><div class="tagline">Decision support</div><h3>Finance & insurance</h3><p>Evidence packs that survive a credit file: assurance level, data lineage and what would invalidate the claim.</p><span class="more">Read the sector note →</span></a></div>
 
-    <div id="coffee" class="card" style="padding:32px 30px;margin-bottom:22px">
-      <div class="tagline">Primary focus</div>
-      <h3 style="font-size:24px">Coffee &amp; agriculture</h3>
-      <div class="grid-3" style="margin-top:16px">
-        <div><b style="display:block;font-size:14px;margin-bottom:4px">What is verifiable today</b>
-          <p style="font-size:14px;color:#3c4a59">Batch electricity from a metered supply, nutrient input mass,
-            packaging, outbound transport, and an embedded-hardware allocation — all with hourly grid factors.</p></div>
-        <div><b style="display:block;font-size:14px;margin-bottom:4px">What is not</b>
-          <p style="font-size:14px;color:#3c4a59">The conventional-farming baseline. It cannot be measured from
-            your fleet; it must be surveyed, co-signed and frozen before any reduction claim.</p></div>
-        <div><b style="display:block;font-size:14px;margin-bottom:4px">Why it matters commercially</b>
-          <p style="font-size:14px;color:#3c4a59">A labelled lot can carry primary-data scope 3 into a buyer's
-            own footprint. That is the only reason a premium survives a procurement review.</p></div>
-      </div>
-    </div>
+    <h2 style="font-size:24px;letter-spacing:-.5px;margin:34px 0 8px">How the four sectors compare</h2>
+    <table class="data">
+      <thead><tr><th>Sector</th><th>Dominant line item</th><th class="n">Grade reachable</th><th>Typical cycle</th></tr></thead>
+      <tbody>
+        <tr><td><b>Coffee &amp; agriculture</b></td><td>Electricity (61.5%)</td><td class="n">A / B</td><td>10 working days</td></tr>
+        <tr><td><b>Food &amp; beverage</b></td><td>Ingredient production (45–65%)</td><td class="n">B</td><td>12 weeks to first lot</td></tr>
+        <tr><td><b>Manufacturing</b></td><td>Line electricity (78%)</td><td class="n">A / B</td><td>11 working days</td></tr>
+        <tr><td><b>Finance &amp; insurance</b></td><td>Depends on the underlying asset</td><td class="n">limited assurance</td><td>8 working days</td></tr>
+      </tbody>
+    </table>
 
-    <div class="grid-3">
-      <div id="food" class="card">
-        <div class="tagline">Food &amp; beverage</div>
-        <h3>Scope 3 primary data</h3>
-        <p>Ingredient-level footprints where the supplier is small and the buyer needs auditable primary data
-          rather than a spend-based estimate.</p>
-      </div>
-      <div id="manufacturing" class="card">
-        <div class="tagline">Manufacturing</div>
-        <h3>Process and embedded emissions</h3>
-        <p>Line-level energy and material balance, allocation across product families, and the embedded carbon
-          of equipment amortised per unit.</p>
-      </div>
-      <div id="finance" class="card">
-        <div class="tagline">Finance &amp; insurance</div>
-        <h3>Evidence packs</h3>
-        <p>Lending and underwriting decisions need a defensible evidence chain, not a sustainability report.
-          We produce the former.</p>
-      </div>
-    </div>
-
-    <div class="note" style="margin-top:26px;border-left:3px solid #b4761a;background:#fdf8ef;padding:14px 18px">
+    <div class="note" style="border-left:3px solid #b4761a;background:#fdf8ef;padding:14px 18px;margin-top:22px">
       <b>We do not take engagements we cannot finish.</b> If the data source is a spreadsheet with no metering
       behind it, a verification would be a review of the spreadsheet — which is worth something, but must be
       sold and described as a review, not a verified footprint.
     </div>
+
+    <div style="margin:36px 0 10px"><a class="btn btn-primary" href="../contact/index.html">Request a quote</a></div>
   </div>
 </section>
-
-<div class="band"><div class="wrap">
-  <div><h2>Have a lot and a buyer?</h2><p>Send the batch shape and the claim. We will tell you within two
-    working days whether it is verifiable.</p></div>
-  <a class="btn btn-white" href="../contact/index.html">Request a quote</a>
-</div></div>
-
 <footer class="site"><div class="wrap">
   <div class="cols">
     <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Independent verification body for carbon claims in agricultural supply chains. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
     <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a></div>
     <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../filing/conditions.html">Conditions of establishment</a><a href="../filing/governance.html">Impartiality</a><a href="../contact/index.html">Contact</a></div>
-    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../filing/services.html">Fee schedule</a><a href="../filing/index.html">中文版（设立文件）</a></div>
+    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../simulator/index.html">Revenue simulator</a><a href="../filing/index.html">中文版（设立文件）</a></div>
   </div>
   <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
 </div></footer>
