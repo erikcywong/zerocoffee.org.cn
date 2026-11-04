@@ -4,13 +4,52 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Label registry — ZeroCarbon Verify</title>
+<meta name="description" content="Public register of 100 published carbon labels across four sectors, with a recomputable hash chain.">
+<link rel="canonical" href="https://zerocoffee.org.cn/registry/">
 <link rel="stylesheet" href="../assets/site.css">
+
+<style>
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:20px 0 26px}
+  .kpis .k{background:#fff;padding:18px 20px}
+  .kpis .v{font-size:26px;font-weight:750;letter-spacing:-1px;color:var(--navy);font-family:var(--mono)}
+  .kpis .l{font-size:12px;color:var(--gray);margin-top:5px}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0 14px}
+  .filters select,.filters input{font-family:inherit;font-size:13px;padding:9px 12px;border:1px solid var(--line);
+    border-radius:4px;background:#fff;color:var(--ink);min-width:150px}
+  .filters input{flex:1 1 220px}
+  .filters .status{font-size:12px;color:var(--gray);font-family:var(--mono)}
+  #regTable tbody tr{cursor:pointer}
+  #regTable tbody tr:hover td{background:#f7fafc}
+  #regTable tbody tr.sel td{background:#eef7f5}
+  .pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.8px;padding:2px 7px;border-radius:3px;
+    font-family:var(--mono);text-transform:uppercase}
+  .pill.A{background:#e3f5ef;color:#0a6b52}.pill.B{background:#eaf0f8;color:#24497e}.pill.C{background:#fbf1e2;color:#8a5a12}
+  .pill.sim{background:#f1f1f4;color:#5a6270}
+  .pager{display:flex;align-items:center;gap:14px;margin:16px 0 0;font-size:13px;color:var(--gray)}
+  .pager button{font-family:inherit;font-size:13px;padding:7px 14px;border:1px solid var(--line);background:#fff;
+    border-radius:4px;cursor:pointer;color:var(--ink)}
+  .pager button:disabled{opacity:.4;cursor:default}
+  .detail{border:1px solid var(--line);border-radius:4px;margin-top:26px;background:#fff;overflow:hidden}
+  .detail .hd{background:var(--navy);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;
+    align-items:baseline;gap:14px;flex-wrap:wrap}
+  .detail .hd b{font-size:17px}
+  .detail .bd{padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  .detail .bd>div{min-width:0}
+  .kv2{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:13px}
+  .kv2 .k{color:var(--gray);font-size:11px;letter-spacing:.6px;text-transform:uppercase;padding-top:3px}
+  .kv2 .v{font-family:var(--mono);font-size:12.5px;word-break:break-all}
+  .chain{font-family:var(--mono);font-size:12px;line-height:1.9;background:#0a0e13;color:#b8c7d9;
+    padding:14px 16px;border-radius:4px;overflow-x:auto;white-space:pre;line-height:1.9}
+  .chain .ok{color:#4ade80}.chain .bad{color:#ff6b6b}.chain .dim{color:#5b6b7d}
+  @media(max-width:820px){.kpis{grid-template-columns:1fr 1fr}.detail .bd{grid-template-columns:1fr}}
+</style>
+
 </head>
 <body>
 <div class="util"><div class="wrap">
   <span>Independent verification body · Hong Kong</span>
   <span class="badge warn">Accreditation in progress — not yet accredited</span>
-  <div class="right"><a href="../filing/index.html">中文版</a><a href="index.html">Label registry</a></div>
+  <div class="right"><a href="../filing/index.html">中文版</a><a href="../registry/index.html">Label registry</a></div>
 </div></div>
 <header class="site"><div class="wrap">
   <a class="brand" href="../index.html">
@@ -20,12 +59,14 @@
     <div class="item"><a href="../services/index.html">Services</a></div>
     <div class="item"><a href="../industries/index.html">Industries</a></div>
     <div class="item"><a href="../platform/index.html">Digital platform</a></div>
+    <div class="item"><a href="../simulator/index.html">Simulator</a></div>
     <div class="item"><a href="../insights/index.html">Insights</a></div>
     <div class="item"><a href="../about/index.html">About</a></div>
-  <div class="item"><a href="../certify/index.html">Certify</a></div>
+    <div class="item"><a href="../certify/index.html">Certify</a></div>
+    
   </nav>
-  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a></div>
-<button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>  <div class="nav-drawer" id="navDrawer"><div class="wrap inner">
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../registry/index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a><button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+  <div class="nav-drawer" id="navDrawer"><div class="wrap inner">
       <a href="../services/index.html">Services</a>
       <a href="../industries/index.html">Industries</a>
       <a href="../platform/index.html">Digital platform</a>
@@ -36,67 +77,206 @@
       <div class="util-links"><a href="../registry/index.html">Verify a label</a><a href="../contact/index.html">Request a quote</a><a href="../admin/index.html">Operator console</a><a href="../filing/index.html">中文版</a></div>
   </div></div>
 </header>
-
+<div class="crumb"><div class="wrap"><a href="../index.html">Home</a><span class="sep">/</span><span class="here">Label registry</span></div></div>
 <section>
   <div class="wrap">
+
     <div class="sec-head">
       <div class="eyebrow">Public registry</div>
-      <h2>Every label we issue, including the ones we revoke</h2>
-      <p>A registry that only lists valid certificates is marketing. This one keeps the withdrawn entries with
-        their date and reason, because that is where the evidence value is.</p>
+      <h2>100 published labels, four sectors</h2>
+      <p>Every label carries its own hash and commits to the label before it. The chain can be recomputed here,
+        in your browser, without calling any server — that is the whole point of publishing it.</p>
     </div>
 
-    <table class="data">
+    <div class="note" style="border-left:3px solid #b4761a;background:#fdf8ef;padding:14px 18px;margin:0 0 8px">
+      <b>Demonstration register.</b> These 100 records are a simulated reference portfolio generated to exercise
+      the register and the verification logic. They are internally consistent and chain-verified, but they are
+      <b>not certification decisions</b>. The one live label issued on the CoffeeJeV platform is verified
+      separately on the <a href="../platform/index.html">platform page</a> and in the
+      <a href="../certify/index.html">certification case</a>.
+    </div>
+
+    <div class="kpis">
+      <div class="k"><div class="v" id="k-count">—</div><div class="l">labels published</div></div>
+      <div class="k"><div class="v" id="k-sectors">—</div><div class="l">sectors</div></div>
+      <div class="k"><div class="v" id="k-tonnes">—</div><div class="l">tCO₂e declared</div></div>
+      <div class="k"><div class="v" id="k-chain">—</div><div class="l">chain integrity</div></div>
+    </div>
+
+    <div class="filters">
+      <select id="f-sector"><option value="">All sectors</option></select>
+      <select id="f-grade">
+        <option value="">All grades</option><option value="A">Grade A</option>
+        <option value="B">Grade B</option><option value="C">Grade C</option>
+      </select>
+      <input id="f-q" placeholder="Search label id, holder or batch…">
+      <button class="btn btn-ghost btn-sm" id="btn-chain" type="button">Verify chain</button>
+      <span class="status" id="f-status"></span>
+    </div>
+
+    <table class="data" id="regTable">
       <thead><tr>
-        <th style="width:24%">Label ID</th><th style="width:14%">Batch</th><th style="width:12%" class="n">kgCO₂e / unit</th>
-        <th style="width:10%">Grade</th><th style="width:16%">Method</th><th style="width:24%">Verify</th>
+        <th style="width:20%">Label ID</th><th style="width:19%">Holder</th><th style="width:17%">Sector</th>
+        <th style="width:12%">Batch</th><th class="n" style="width:9%">kgCO₂e / unit</th>
+        <th style="width:7%">Grade</th><th style="width:10%">Issued</th><th style="width:6%">Hash</th>
       </tr></thead>
-      <tbody>
-        <tr>
-          <td><b>CJ-CN-2026-0712-63E7</b><div class="note" style="font-family:ui-monospace">hash 63e7b24d · prev genesis</div></td>
-          <td>AP-0712<div class="note">480 plantlets · PuEr-01</div></td>
-          <td class="n">0.195</td>
-          <td><span class="badge ok">B</span></td>
-          <td><code>CJV-MTH-1.0</code><div class="note">2026-11-03</div></td>
-          <td><a href="https://www.coffeejev.space/v/?id=CJ-CN-2026-0712-63E7" target="_blank" rel="noopener">Recompute in browser →</a>
-            <div class="note">Issued by ZeroCarbon Verify (establishment stage). Not usable for compliance.</div></td>
-        </tr>
-      </tbody>
+      <tbody></tbody>
     </table>
 
-    <h2 style="margin-top:50px;font-size:26px;letter-spacing:-.6px">How to check a label yourself</h2>
-    <div class="rows">
-      <div class="row-item"><span class="n">01</span><span><b>Scan the QR on the label</b><span>It resolves to <code>/v/?id=&lt;label id&gt;</code></span></span><span></span></div>
-      <div class="row-item"><span class="n">02</span><span><b>The page recomputes the hash locally</b><span><code>fnv(prev + batch|total|per_unit|grade)</code> — no server call needed</span></span><span></span></div>
-      <div class="row-item"><span class="n">03</span><span><b>Then it checks the arithmetic</b><span>Line items must sum to the declared total, and the declared grade must match the metered share</span></span><span></span></div>
-      <div class="row-item"><span class="n">04</span><span><b>Mismatch is shown in red</b><span>To us last, to the reader first</span></span><span></span></div>
+    <div class="pager">
+      <button id="prev" type="button">← Previous</button>
+      <span id="pageInfo"></span>
+      <button id="next" type="button">Next →</button>
     </div>
 
-    <h2 style="margin-top:50px;font-size:26px;letter-spacing:-.6px">Revocations</h2>
-    <table class="data">
-      <thead><tr><th style="width:24%">Label ID</th><th style="width:16%">Date</th><th style="width:36%">Reason</th><th style="width:24%">Effect</th></tr></thead>
-      <tbody><tr><td colspan="4" class="note">No revocations to date.</td></tr></tbody>
-    </table>
+    <div id="detail"></div>
 
-    <h2 style="margin-top:50px;font-size:26px;letter-spacing:-.6px">Method versions</h2>
-    <table class="data">
-      <thead><tr><th style="width:26%">Method</th><th style="width:16%">Effective</th><th style="width:16%" class="n">Rules</th><th style="width:20%">Hash</th><th style="width:22%">Status</th></tr></thead>
-      <tbody><tr><td><code>CJV-MTH-1.0</code></td><td>2026-11-03</td><td class="n">12</td><td><code>9b12abef</code></td><td><span class="badge ok">current</span></td></tr></tbody>
-    </table>
-    <p class="note" style="margin-top:14px">A method change ships a new version. Labels keep pointing at the
-      version they were issued under; nothing is silently recomputed.</p>
+    <h2 style="font-size:22px;letter-spacing:-.5px;margin:46px 0 8px">How the chain is recomputed</h2>
+    <p style="font-size:14.5px;color:#3c4a59;max-width:74ch">
+      Each record commits to the previous label's hash and to four of its own fields. Change any digit in
+      <code>batch</code>, <code>total</code>, <code>per_unit</code> or <code>grade</code> and the recomputed hash
+      stops matching — and because every later label commits to this one, the entire tail breaks with it.
+    </p>
+    <div class="chain">hash = fnv( prev_hash + "batch|total|per_unit|grade" )</div>
+
   </div>
 </section>
-
 <footer class="site"><div class="wrap">
   <div class="cols">
     <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Independent verification body for carbon claims in agricultural supply chains. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
     <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a></div>
     <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../filing/conditions.html">Conditions of establishment</a><a href="../filing/governance.html">Impartiality</a><a href="../contact/index.html">Contact</a></div>
-    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="index.html">Label registry</a><a href="../filing/services.html">Fee schedule</a><a href="../filing/index.html">中文版（设立文件）</a></div>
+    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../simulator/index.html">Revenue simulator</a><a href="../filing/index.html">中文版（设立文件）</a></div>
   </div>
   <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
 </div></footer>
+
+<script src="../assets/api.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var PAGE = 25, state = { all: [], view: [], page: 0, sel: null, doc: null };
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) {
+    return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+
+  function renderTable() {
+    var rows = state.view.slice(state.page * PAGE, state.page * PAGE + PAGE);
+    $('regTable').querySelector('tbody').innerHTML = rows.map(function (l) {
+      return '<tr data-id="' + l.label_id + '" class="' + (state.sel === l.label_id ? 'sel' : '') + '">' +
+        '<td class="mono">' + l.label_id + '</td>' +
+        '<td>' + esc(l.holder) + '</td>' +
+        '<td>' + esc(l.sector_name) + '</td>' +
+        '<td class="mono">' + esc(l.batch) + '</td>' +
+        '<td class="n mono">' + l.kgco2e_per_unit.toFixed(3) + '</td>' +
+        '<td><span class="pill ' + l.grade + '">' + l.grade + '</span></td>' +
+        '<td class="mono">' + l.issued + '</td>' +
+        '<td class="mono" style="color:#7a8798">' + l.hash.slice(0, 6) + '</td></tr>';
+    }).join('');
+    var pages = Math.max(1, Math.ceil(state.view.length / PAGE));
+    $('pageInfo').textContent = 'page ' + (state.page + 1) + ' / ' + pages + ' · ' + state.view.length + ' labels';
+    $('prev').disabled = state.page === 0;
+    $('next').disabled = state.page >= pages - 1;
+  }
+
+  function detail(l) {
+    state.sel = l.label_id;
+    var idx = state.all.findIndex(function (x) { return x.label_id === l.label_id; });
+    var prevHash = l.prev;
+    var re = ZV.fnv(String(l.prev) + l.payload);
+    var ok = re === l.hash;
+    var lines = l.lines.map(function (x) {
+      return '<div style="display:flex;justify-content:space-between;font-size:12.5px;padding:3px 0;border-bottom:1px solid var(--line)">' +
+        '<span>' + esc(x.label) + ' <span style="color:#9aa7b6">(' + x.share_pct + '%)</span></span>' +
+        '<b class="mono">' + x.kgco2e.toFixed(3) + '</b></div>';
+    }).join('');
+    $('detail').innerHTML =
+      '<div class="detail"><div class="hd"><b>' + l.label_id + ' · ' + esc(l.holder) + '</b>' +
+      '<span class="mono">' + esc(l.sector_name) + ' · ' + l.issued + '</span></div>' +
+      '<div class="bd"><div>' +
+        '<div class="tagline" style="margin-bottom:6px">Record</div>' +
+        '<div class="kv2">' +
+        '<span class="k">Batch</span><span class="v">' + esc(l.batch) + '</span>' +
+        '<span class="k">Units</span><span class="v">' + l.units.toLocaleString() + ' ' + esc(l.unit_name) + '</span>' +
+        '<span class="k">Per unit</span><span class="v">' + l.kgco2e_per_unit.toFixed(3) + ' kgCO₂e</span>' +
+        '<span class="k">Total</span><span class="v">' + l.kgco2e_total.toFixed(1) + ' kgCO₂e</span>' +
+        '<span class="k">Baseline</span><span class="v">' + l.baseline_per_unit.toFixed(3) + ' → ' +
+          l.reduction_pct.toFixed(1) + '% reduction</span>' +
+        '<span class="k">Metered</span><span class="v">' + l.data_quality.toFixed(1) + '% · grade ' + l.grade + '</span>' +
+        '<span class="k">Method</span><span class="v">' + esc(l.method) + ' · ' + esc(l.method_hash) + '</span>' +
+        '<span class="k">Fee</span><span class="v">¥' + l.fee_cny + ' / batch</span>' +
+        '<span class="k">Valid</span><span class="v">' + l.issued + ' → ' + l.expires + '</span>' +
+        '<span class="k">Provenance</span><span class="v"><span class="pill sim">simulated</span></span>' +
+        '</div></div><div>' +
+        '<div class="tagline" style="margin-bottom:6px">Line items</div>' + lines +
+        '<div class="tagline" style="margin:16px 0 6px">Chain check</div>' +
+        '<div class="chain">prev    <span class="dim">' + esc(l.prev) + '</span>' +
+        '\npayload <span class="dim">' + esc(l.payload) + '</span>' +
+        '\nfnv()   ' + re + '  ' + (ok ? '<span class="ok">✓ match</span>' : '<span class="bad">✗ MISMATCH</span>') +
+        '\npublished ' + l.hash + (idx > 0 ? '\n\nprevious label ' + esc(state.all[idx - 1].label_id) : '\n\nfirst label (genesis)') +
+        '</div></div></div></div>';
+    renderTable();
+    $('detail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function apply() {
+    var sec = $('f-sector').value, gr = $('f-grade').value, q = $('f-q').value.trim().toLowerCase();
+    state.view = state.all.filter(function (l) {
+      if (sec && l.sector !== sec) return false;
+      if (gr && l.grade !== gr) return false;
+      if (q && (l.label_id + ' ' + l.holder + ' ' + l.batch + ' ' + l.sector_name).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+    state.page = 0;
+    renderTable();
+    $('f-status').textContent = state.view.length + ' of ' + state.all.length + ' records';
+  }
+
+  function verifyChain() {
+    var ok = 0, firstBad = null, prev = 'genesis';
+    for (var i = 0; i < state.all.length; i++) {
+      var l = state.all[i];
+      var good = l.prev === prev && ZV.fnv(String(l.prev) + l.payload) === l.hash;
+      if (good) ok++; else if (!firstBad) firstBad = l.label_id;
+      prev = l.hash;
+    }
+    $('k-chain').textContent = ok + '/' + state.all.length;
+    $('k-chain').style.color = ok === state.all.length ? '#04726d' : '#9c3a2c';
+    $('f-status').textContent = firstBad
+      ? 'chain broken at ' + firstBad
+      : 'chain intact: ' + ok + '/' + state.all.length + ' hashes recomputed, head ' + state.all[state.all.length - 1].hash;
+  }
+
+  fetch('labels.json').then(function (r) { return r.json(); }).then(function (doc) {
+    state.doc = doc; state.all = doc.labels;
+    $('k-count').textContent = doc.count;
+    $('k-sectors').textContent = Object.keys(doc.sectors).length;
+    $('k-tonnes').textContent = (doc.labels.reduce(function (a, l) { return a + l.kgco2e_total; }, 0) / 1000).toFixed(1) + ' t';
+    var sel = $('f-sector');
+    Object.keys(doc.sectors).forEach(function (k) {
+      var o = document.createElement('option'); o.value = k; o.textContent = doc.sectors[k]; sel.appendChild(o);
+    });
+    sel.addEventListener('change', apply);
+    $('f-grade').addEventListener('change', apply);
+    $('f-q').addEventListener('input', apply);
+    $('prev').addEventListener('click', function () { if (state.page > 0) { state.page--; renderTable(); } });
+    $('next').addEventListener('click', function () {
+      if ((state.page + 1) * PAGE < state.view.length) { state.page++; renderTable(); } });
+    $('btn-chain').addEventListener('click', verifyChain);
+    $('regTable').addEventListener('click', function (e) {
+      var tr = e.target.closest('tr[data-id]');
+      if (tr) { var l = state.all.find(function (x) { return x.label_id === tr.dataset.id; }); if (l) detail(l); }
+    });
+    apply();
+    verifyChain();
+    var q = new URLSearchParams(location.search).get('id');
+    if (q) { var hit = state.all.find(function (x) { return x.label_id === q; }); if (hit) detail(hit); }
+  }).catch(function (e) {
+    $('f-status').textContent = 'register unavailable: ' + e.message;
+  });
+})();
+</script>
+
 <script src="../assets/site.js"></script>
 </body>
 </html>
