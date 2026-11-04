@@ -11,8 +11,17 @@
   var KEY = 'zv-lang';
   var LANG = localStorage.getItem(KEY) === 'zh' ? 'zh' : 'en';
   // ?lang=zh makes the state linkable and testable
+  // ?lang=zh is convenient for sharing, but it must not become a trap: once
+  // applied it is stripped from the address bar, so a later reload follows the
+  // stored preference instead of the stale parameter.
   var qs = new URLSearchParams(location.search).get('lang');
-  if (qs === 'zh' || qs === 'en') { LANG = qs; localStorage.setItem(KEY, qs); }
+  if (qs === 'zh' || qs === 'en') {
+    LANG = qs;
+    localStorage.setItem(KEY, qs);
+    var u = new URL(location.href);
+    u.searchParams.delete('lang');
+    history.replaceState(null, '', u.pathname + (u.search || '') + u.hash);
+  }
   var SKIP = /^(SCRIPT|STYLE|CODE|PRE|KBD|TEXTAREA|SVG|PATH)$/;
   var ATTRS = ['placeholder', 'title', 'aria-label', 'alt'];
   var dict = null;
@@ -83,7 +92,10 @@
       var b = e.target.closest('button');
       if (!b || b.dataset.lang === LANG) return;
       localStorage.setItem(KEY, b.dataset.lang);
-      location.reload();
+      // reload without ?lang, otherwise the parameter would override the choice
+      var u = new URL(location.href);
+      u.searchParams.delete('lang');
+      location.replace(u.pathname + (u.search || '') + u.hash);
     });
   }
 
