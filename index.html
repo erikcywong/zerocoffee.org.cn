@@ -123,6 +123,54 @@
     <div class="s"><div class="v">A/B/C</div><div class="k">evidence grades, priced differently</div></div>
     <div class="s"><div class="v">0</div><div class="k">equity held in the parties we verify</div></div>
   </div>
+
+<section class="film" id="film">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Introduction</div>
+        <h2>A hundred seconds on what this is</h2>
+        <p class="lead">What we verify, how a label is frozen, what the register can prove, and what each of the
+          four sectors gets out of it — in plain language.</p>
+      </div>
+      <div class="film-switch" id="filmSwitch">
+        <button data-lang="en" class="on">English</button>
+        <button data-lang="zh">中文</button>
+      </div>
+    </div>
+    <video id="homeFilm" controls playsinline preload="metadata" poster="assets/video/home-en.jpg">
+      <source id="homeFilmSrc" src="assets/video/home-en.mp4" type="video/mp4">
+    </video>
+    <p class="cap" id="homeFilmCap"><b>Narrated overview.</b> Every figure quoted is on this site: the register
+      holds 100 labels, the chain is recomputable in your browser, and the method is published. Accreditation is
+      still in progress, and the film says so.</p>
+  </div>
+</section>
+<script>
+(function () {
+  var v = document.getElementById('homeFilm');
+  if (!v) return;
+  var src = document.getElementById('homeFilmSrc');
+  var caps = {
+    en: '<b>Narrated overview.</b> Every figure quoted is on this site: the register holds 100 labels, the chain is recomputable in your browser, and the method is published. Accreditation is still in progress, and the film says so.',
+    zh: '<b>中文旁白。</b>片中引用的每一个数字都在本站可以查到：登记簿有 100 张标签、哈希链可在你的浏览器里重算、方法学全文公开。认可仍在进行中，片子也如实说了这一点。'
+  };
+  document.getElementById('filmSwitch').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var l = b.dataset.lang;
+    Array.prototype.forEach.call(this.querySelectorAll('button'), function (x) {
+      x.classList.toggle('on', x === b);
+    });
+    var t = v.currentTime, playing = !v.paused;
+    src.src = 'assets/video/home-' + l + '.mp4';
+    v.poster = 'assets/video/home-' + l + '.jpg';
+    document.getElementById('homeFilmCap').innerHTML = caps[l];
+    v.load(); v.currentTime = t;
+    if (playing) v.play().catch(function () {});
+  });
+})();
+</script>
+
 </div>
 
 <section>
@@ -163,6 +211,7 @@
     </div>
   </div>
 </section>
+
 
 <section class="bg-soft">
   <div class="wrap">

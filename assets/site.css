@@ -283,3 +283,18 @@ table.data td.n{text-align:right;font-family:var(--mono);white-space:nowrap;colo
   .art table.data,table.data{display:block;overflow-x:auto;white-space:nowrap}
   .chiprow .c{flex:1 1 100%}
 }
+
+/* ---------- homepage introduction film ---------- */
+.film{background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:clamp(40px,5vw,64px) 0}
+.film .head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.film h2{font-size:clamp(24px,2.6vw,32px);letter-spacing:-.8px;margin:6px 0 0}
+.film .lead{font-size:15px;color:#3c4a59;margin-top:8px;max-width:62ch}
+.film-switch{display:flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px}
+.film-switch button{border:0;background:none;font:inherit;font-size:12.5px;font-weight:700;color:var(--gray);
+  padding:6px 14px;border-radius:999px;cursor:pointer}
+.film-switch button.on{background:var(--navy);color:#fff}
+.film video{width:100%;display:block;border-radius:6px;background:#07090c;
+  box-shadow:0 22px 46px rgba(0,20,50,.18);border:1px solid var(--line)}
+.film .cap{font-size:12.5px;color:var(--gray);margin-top:12px;line-height:1.7}
+.film .cap b{color:#3c4a59}
