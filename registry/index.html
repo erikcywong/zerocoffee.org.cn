@@ -4,15 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Label registry — ZeroCarbon Verify</title>
-<meta name="description" content="Public register of 100 published carbon labels across four sectors, with a recomputable hash chain.">
+<meta name="description" content="Public register of 100 published carbon labels across four sectors, with a recomputable hash chain and a live tamper demonstration.">
 <link rel="canonical" href="https://zerocoffee.org.cn/registry/">
 <link rel="stylesheet" href="../assets/site.css">
 
 <style>
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:20px 0 26px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:20px 0 24px}
   .kpis .k{background:#fff;padding:18px 20px}
   .kpis .v{font-size:26px;font-weight:750;letter-spacing:-1px;color:var(--navy);font-family:var(--mono)}
   .kpis .l{font-size:12px;color:var(--gray);margin-top:5px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .tabs a{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);
+    border-radius:999px;font-size:13px;font-weight:650;color:var(--ink);text-decoration:none;background:#fff}
+  .tabs a:hover{border-color:#b9d6d2;color:var(--teal);text-decoration:none}
+  .tabs a.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .tabs a .n{font-family:var(--mono);font-size:11px;opacity:.75}
   .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0 14px}
   .filters select,.filters input{font-family:inherit;font-size:13px;padding:9px 12px;border:1px solid var(--line);
     border-radius:4px;background:#fff;color:var(--ink);min-width:150px}
@@ -21,6 +27,8 @@
   #regTable tbody tr{cursor:pointer}
   #regTable tbody tr:hover td{background:#f7fafc}
   #regTable tbody tr.sel td{background:#eef7f5}
+  #regTable tbody tr.broken td{background:#fdf1ef;color:#8d2f22}
+  #regTable tbody tr.broken td:first-child{border-left:3px solid #d9534f;padding-left:9px}
   .pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.8px;padding:2px 7px;border-radius:3px;
     font-family:var(--mono);text-transform:uppercase}
   .pill.A{background:#e3f5ef;color:#0a6b52}.pill.B{background:#eaf0f8;color:#24497e}.pill.C{background:#fbf1e2;color:#8a5a12}
@@ -39,9 +47,23 @@
   .kv2 .k{color:var(--gray);font-size:11px;letter-spacing:.6px;text-transform:uppercase;padding-top:3px}
   .kv2 .v{font-family:var(--mono);font-size:12.5px;word-break:break-all}
   .chain{font-family:var(--mono);font-size:12px;line-height:1.9;background:#0a0e13;color:#b8c7d9;
-    padding:14px 16px;border-radius:4px;overflow-x:auto;white-space:pre;line-height:1.9}
+    padding:14px 16px;border-radius:4px;overflow-x:auto;white-space:pre}
   .chain .ok{color:#4ade80}.chain .bad{color:#ff6b6b}.chain .dim{color:#5b6b7d}
-  @media(max-width:820px){.kpis{grid-template-columns:1fr 1fr}.detail .bd{grid-template-columns:1fr}}
+  .sector-panel{border:1px solid var(--line);border-radius:4px;padding:20px 22px;background:#fff;margin:0 0 20px}
+  .sector-panel h3{font-size:18px;margin:0 0 4px;letter-spacing:-.3px}
+  .sector-panel .sub{font-size:13px;color:var(--gray);margin-bottom:16px}
+  .sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  .sgrid .v{font-size:21px;font-weight:750;color:var(--navy);font-family:var(--mono);letter-spacing:-.6px}
+  .sgrid .l{font-size:11.5px;color:var(--gray);margin-top:3px}
+  .gbar{display:flex;height:8px;border-radius:3px;overflow:hidden;margin-top:16px;background:#eef1f5}
+  .gbar i{display:block;height:100%}
+  .glegen{display:flex;gap:16px;font-size:11.5px;color:var(--gray);margin-top:8px}
+  .glegen span{display:inline-flex;align-items:center;gap:5px}
+  .glegen b{width:8px;height:8px;border-radius:2px;display:inline-block}
+  .tamper{border-left:3px solid #d9534f;background:#fdf1ef;padding:14px 18px;margin:0 0 16px;font-size:13.5px;line-height:1.7}
+  .tamper b{color:#8d2f22}
+  @media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}.sgrid{grid-template-columns:1fr 1fr}
+    .detail .bd{grid-template-columns:1fr}}
 </style>
 
 </head>
@@ -103,14 +125,20 @@
       <div class="k"><div class="v" id="k-chain">—</div><div class="l">chain integrity</div></div>
     </div>
 
+    <div class="tabs" id="tabs"></div>
+
+    <div id="sectorPanel"></div>
+    <div id="tamperBox"></div>
+
     <div class="filters">
-      <select id="f-sector"><option value="">All sectors</option></select>
       <select id="f-grade">
         <option value="">All grades</option><option value="A">Grade A</option>
         <option value="B">Grade B</option><option value="C">Grade C</option>
       </select>
       <input id="f-q" placeholder="Search label id, holder or batch…">
       <button class="btn btn-ghost btn-sm" id="btn-chain" type="button">Verify chain</button>
+      <button class="btn btn-ghost btn-sm" id="btn-tamper" type="button">Tamper with a record</button>
+      <button class="btn btn-ghost btn-sm" id="btn-reset" type="button" style="display:none">Restore</button>
       <span class="status" id="f-status"></span>
     </div>
 
@@ -136,6 +164,7 @@
       Each record commits to the previous label's hash and to four of its own fields. Change any digit in
       <code>batch</code>, <code>total</code>, <code>per_unit</code> or <code>grade</code> and the recomputed hash
       stops matching — and because every later label commits to this one, the entire tail breaks with it.
+      Press <b>Tamper with a record</b> to watch that happen.
     </p>
     <div class="chain">hash = fnv( prev_hash + "batch|total|per_unit|grade" )</div>
 
@@ -155,20 +184,96 @@
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
-  var PAGE = 25, state = { all: [], view: [], page: 0, sel: null, doc: null };
+  var PAGE = 25;
+  var state = { all: [], doc: null, view: [], page: 0, sel: null, sector: '', tamper: null };
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) {
     return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+  function money(n) { return '¥' + Math.round(n).toLocaleString('en-US'); }
 
-  function renderTable() {
+  /* ---------------- the chain, as it stands right now (tamper applied) ---------------- */
+  function payloadOf(l) {
+    return [l.batch, l.kgco2e_total, l.kgco2e_per_unit, l.grade].join('|');
+  }
+
+  function evaluate() {
+    // returns [{ok, recomputed, reason}] aligned with state.all
+    var out = [], prev = 'genesis';
+    for (var i = 0; i < state.all.length; i++) {
+      var l = state.all[i];
+      var rec;
+      if (state.tamper && state.tamper.i === i) {
+        l = Object.assign({}, l); l[state.tamper.field] = state.tamper.value;
+      }
+      rec = ZV.fnv(prev + payloadOf(l));
+      var linkOk = l.prev === prev;
+      out.push({ ok: linkOk && rec === l.hash, recomputed: rec, linkOk: linkOk, payload: payloadOf(l) });
+      prev = rec;   // publish order: the next record must commit to what is displayed here
+    }
+    return out;
+  }
+
+  /* ---------------- sector aggregate ---------------- */
+  function stats(rows) {
+    if (!rows.length) return null;
+    var tot = rows.reduce(function (a, l) { return a + l.kgco2e_total; }, 0);
+    var red = rows.reduce(function (a, l) { return a + (l.reduction_pct || 0); }, 0) / rows.length;
+    var dq = rows.reduce(function (a, l) { return a + l.data_quality; }, 0) / rows.length;
+    var dates = rows.map(function (l) { return l.issued; }).sort();
+    var holders = {};
+    rows.forEach(function (l) { holders[l.holder] = 1; });
+    var g = { A: 0, B: 0, C: 0 };
+    rows.forEach(function (l) { g[l.grade]++; });
+    return {
+      n: rows.length, tonnes: tot / 1000, avgReduction: red, avgDQ: dq,
+      first: dates[0], last: dates[dates.length - 1],
+      holders: Object.keys(holders).length, grades: g,
+      fee: rows.reduce(function (a, l) { return a + l.fee_cny; }, 0)
+    };
+  }
+
+  function renderSectorPanel() {
+    var box = $('sectorPanel');
+    if (!state.sector) { box.innerHTML = ''; return; }
+    var rows = state.all.filter(function (l) { return l.sector === state.sector; });
+    var s = stats(rows);
+    var name = state.doc.sectors[state.sector];
+    var total = s.n || 1;
+    box.innerHTML =
+      '<div class="sector-panel"><h3>' + esc(name) + '</h3>' +
+      '<div class="sub">' + s.n + ' labels · ' + esc(s.first) + ' → ' + esc(s.last) +
+      ' · ' + s.holders + ' holders</div>' +
+      '<div class="sgrid">' +
+        '<div><div class="v">' + s.tonnes.toFixed(1) + ' t</div><div class="l">tCO₂e declared</div></div>' +
+        '<div><div class="v">' + s.avgReduction.toFixed(1) + '%</div><div class="l">average reduction</div></div>' +
+        '<div><div class="v">' + s.avgDQ.toFixed(1) + '%</div><div class="l">average metered share</div></div>' +
+        '<div><div class="v">' + s.grades.A + '/' + s.grades.B + '/' + s.grades.C + '</div><div class="l">grades A / B / C</div></div>' +
+        '<div><div class="v">' + money(s.fee) + '</div><div class="l">label fees booked</div></div>' +
+      '</div>' +
+      '<div class="gbar">' +
+        '<i style="width:' + (s.grades.A / total * 100) + '%;background:#0f8f76"></i>' +
+        '<i style="width:' + (s.grades.B / total * 100) + '%;background:#3c6aa7"></i>' +
+        '<i style="width:' + (s.grades.C / total * 100) + '%;background:#b4761a"></i>' +
+      '</div>' +
+      '<div class="glegen"><span><b style="background:#0f8f76"></b>Grade A ' + s.grades.A + '</span>' +
+      '<span><b style="background:#3c6aa7"></b>Grade B ' + s.grades.B + '</span>' +
+      '<span><b style="background:#b4761a"></b>Grade C ' + s.grades.C + '</span></div></div>';
+  }
+
+  /* ---------------- table ---------------- */
+  function renderTable(ev) {
+    ev = ev || evaluate();
     var rows = state.view.slice(state.page * PAGE, state.page * PAGE + PAGE);
     $('regTable').querySelector('tbody').innerHTML = rows.map(function (l) {
-      return '<tr data-id="' + l.label_id + '" class="' + (state.sel === l.label_id ? 'sel' : '') + '">' +
+      var i = state.all.indexOf(l);
+      var st = ev[i];
+      var cls = (state.sel === l.label_id ? 'sel ' : '') + (st && !st.ok ? 'broken' : '');
+      return '<tr data-id="' + l.label_id + '" class="' + cls + '">' +
         '<td class="mono">' + l.label_id + '</td>' +
         '<td>' + esc(l.holder) + '</td>' +
         '<td>' + esc(l.sector_name) + '</td>' +
         '<td class="mono">' + esc(l.batch) + '</td>' +
-        '<td class="n mono">' + l.kgco2e_per_unit.toFixed(3) + '</td>' +
+        '<td class="n mono">' + (state.tamper && state.tamper.i === i ? '<s>' + l.kgco2e_per_unit.toFixed(3) + '</s> ' + state.tamper.value : l.kgco2e_per_unit.toFixed(3)) + '</td>' +
         '<td><span class="pill ' + l.grade + '">' + l.grade + '</span></td>' +
         '<td class="mono">' + l.issued + '</td>' +
         '<td class="mono" style="color:#7a8798">' + l.hash.slice(0, 6) + '</td></tr>';
@@ -179,12 +284,12 @@
     $('next').disabled = state.page >= pages - 1;
   }
 
+  /* ---------------- detail ---------------- */
   function detail(l) {
     state.sel = l.label_id;
-    var idx = state.all.findIndex(function (x) { return x.label_id === l.label_id; });
-    var prevHash = l.prev;
-    var re = ZV.fnv(String(l.prev) + l.payload);
-    var ok = re === l.hash;
+    var ev = evaluate();
+    var i = state.all.indexOf(l);
+    var st = ev[i];
     var lines = l.lines.map(function (x) {
       return '<div style="display:flex;justify-content:space-between;font-size:12.5px;padding:3px 0;border-bottom:1px solid var(--line)">' +
         '<span>' + esc(x.label) + ' <span style="color:#9aa7b6">(' + x.share_pct + '%)</span></span>' +
@@ -210,67 +315,147 @@
         '</div></div><div>' +
         '<div class="tagline" style="margin-bottom:6px">Line items</div>' + lines +
         '<div class="tagline" style="margin:16px 0 6px">Chain check</div>' +
-        '<div class="chain">prev    <span class="dim">' + esc(l.prev) + '</span>' +
-        '\npayload <span class="dim">' + esc(l.payload) + '</span>' +
-        '\nfnv()   ' + re + '  ' + (ok ? '<span class="ok">✓ match</span>' : '<span class="bad">✗ MISMATCH</span>') +
-        '\npublished ' + l.hash + (idx > 0 ? '\n\nprevious label ' + esc(state.all[idx - 1].label_id) : '\n\nfirst label (genesis)') +
+        '<div class="chain">prev      <span class="dim">' + esc(l.prev) + '</span>' +
+        '\npayload   <span class="dim">' + esc(l.payload) + '</span>' +
+        '\nfnv()     ' + st.recomputed + '  ' + (st.ok ? '<span class="ok">✓ match</span>' : '<span class="bad">✗ MISMATCH</span>') +
+        '\npublished ' + l.hash +
+        (i > 0 ? '\n\nprevious  ' + esc(state.all[i - 1].label_id) + '  ' + state.all[i - 1].hash : '\n\nfirst label (genesis)') +
         '</div></div></div></div>';
-    renderTable();
-    $('detail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    renderTable(ev);
+  }
+
+  /* ---------------- filters, url, tabs ---------------- */
+  function syncURL() {
+    var p = new URLSearchParams();
+    if (state.sector) p.set('sector', state.sector);
+    if ($('f-grade').value) p.set('grade', $('f-grade').value);
+    if ($('f-q').value.trim()) p.set('q', $('f-q').value.trim());
+    if (state.sel) p.set('id', state.sel);
+    var qs = p.toString();
+    history.replaceState(null, '', qs ? '?' + qs : location.pathname);
   }
 
   function apply() {
-    var sec = $('f-sector').value, gr = $('f-grade').value, q = $('f-q').value.trim().toLowerCase();
+    var gr = $('f-grade').value, q = $('f-q').value.trim().toLowerCase();
     state.view = state.all.filter(function (l) {
-      if (sec && l.sector !== sec) return false;
+      if (state.sector && l.sector !== state.sector) return false;
       if (gr && l.grade !== gr) return false;
       if (q && (l.label_id + ' ' + l.holder + ' ' + l.batch + ' ' + l.sector_name).toLowerCase().indexOf(q) < 0) return false;
       return true;
     });
     state.page = 0;
+    document.querySelectorAll('#tabs a').forEach(function (a) {
+      a.classList.toggle('on', (a.dataset.sector || '') === state.sector);
+    });
+    renderSectorPanel();
     renderTable();
-    $('f-status').textContent = state.view.length + ' of ' + state.all.length + ' records';
+    $('f-status').textContent = state.view.length + ' of ' + state.all.length + ' records' +
+      (state.sector ? ' · ' + state.doc.sectors[state.sector] : '');
+    syncURL();
+  }
+
+  /* ---------------- chain status + tamper ---------------- */
+  function chainStatus() {
+    var ev = evaluate();
+    var ok = ev.filter(function (x) { return x.ok; }).length;
+    $('k-chain').textContent = ok + '/' + ev.length;
+    $('k-chain').style.color = ok === ev.length ? '#04726d' : '#9c3a2c';
+    return { ev: ev, ok: ok };
   }
 
   function verifyChain() {
-    var ok = 0, firstBad = null, prev = 'genesis';
-    for (var i = 0; i < state.all.length; i++) {
-      var l = state.all[i];
-      var good = l.prev === prev && ZV.fnv(String(l.prev) + l.payload) === l.hash;
-      if (good) ok++; else if (!firstBad) firstBad = l.label_id;
-      prev = l.hash;
-    }
-    $('k-chain').textContent = ok + '/' + state.all.length;
-    $('k-chain').style.color = ok === state.all.length ? '#04726d' : '#9c3a2c';
-    $('f-status').textContent = firstBad
-      ? 'chain broken at ' + firstBad
-      : 'chain intact: ' + ok + '/' + state.all.length + ' hashes recomputed, head ' + state.all[state.all.length - 1].hash;
+    var r = chainStatus();
+    renderTable(r.ev);
+    $('f-status').textContent = r.ok === r.ev.length
+      ? 'chain intact: ' + r.ok + '/' + r.ev.length + ' hashes recomputed'
+      : 'chain broken: ' + (r.ev.length - r.ok) + ' of ' + r.ev.length + ' records fail';
   }
 
+  function renderTamper() {
+    var box = $('tamperBox');
+    if (!state.tamper) { box.innerHTML = ''; $('btn-reset').style.display = 'none'; return; }
+    var t = state.tamper, l = state.all[t.i];
+    var r = chainStatus();
+    var firstBad = r.ev.findIndex(function (x) { return !x.ok; });
+    box.innerHTML = '<div class="tamper"><b>Record altered.</b> ' + l.label_id +
+      ': <code>' + esc(t.field) + '</code> changed from <code>' + esc(t.original) + '</code> to <code>' +
+      esc(t.value) + '</code>.<br>' +
+      'The recomputed hash no longer matches the published one, and every label after it now points at a hash ' +
+      'that no longer exists: <b>' + (r.ev.length - firstBad) + ' of ' + r.ev.length +
+      ' records fail</b> (from #' + (firstBad + 1) + ' onward). The ' + firstBad +
+      ' records before it still verify. <b>Nothing on this page was edited on the server</b> — ' +
+      'the attack happened in your browser and was caught by arithmetic.</div>';
+    $('btn-reset').style.display = 'inline-flex';
+  }
+
+  function tamper() {
+    var i = state.sel ? state.all.indexOf(state.all.filter(function (x) { return x.label_id === state.sel; })[0])
+                      : Math.floor(Math.random() * state.all.length);
+    if (i < 0) i = Math.floor(Math.random() * state.all.length);
+    var l = state.all[i];
+    var field = ['kgco2e_per_unit', 'kgco2e_total', 'grade'][Math.floor(Math.random() * 3)];
+    var original = l[field], value;
+    if (field === 'grade') { value = l.grade === 'A' ? 'B' : 'A'; }
+    else { value = Math.round((l[field] * 0.92) * 1000) / 1000; }   // shave 8% off the number
+    state.tamper = { i: i, field: field, original: original, value: value };
+    renderTamper();
+    verifyChain();
+    // jump to the page holding the altered record so the break is visible immediately
+    var inView = state.view.findIndex(function (x) { return x.label_id === state.all[i].label_id; });
+    if (inView >= 0) state.page = Math.floor(inView / PAGE);
+    renderTable();
+    detail(state.all[i]);
+  }
+
+  function reset() { state.tamper = null; renderTamper(); renderTable(); verifyChain(); }
+
+  /* ---------------- boot ---------------- */
   fetch('labels.json').then(function (r) { return r.json(); }).then(function (doc) {
     state.doc = doc; state.all = doc.labels;
     $('k-count').textContent = doc.count;
     $('k-sectors').textContent = Object.keys(doc.sectors).length;
     $('k-tonnes').textContent = (doc.labels.reduce(function (a, l) { return a + l.kgco2e_total; }, 0) / 1000).toFixed(1) + ' t';
-    var sel = $('f-sector');
+
+    var tabs = '<a href="?">All sectors <span class="n">' + doc.count + '</span></a>';
     Object.keys(doc.sectors).forEach(function (k) {
-      var o = document.createElement('option'); o.value = k; o.textContent = doc.sectors[k]; sel.appendChild(o);
+      var n = doc.labels.filter(function (l) { return l.sector === k; }).length;
+      tabs += '<a href="?sector=' + k + '" data-sector="' + k + '">' + esc(doc.sectors[k]) +
+              ' <span class="n">' + n + '</span></a>';
     });
-    sel.addEventListener('change', apply);
+    $('tabs').innerHTML = tabs;
+
+    var params = new URLSearchParams(location.search);
+    state.sector = params.get('sector') || '';
+    if (params.get('grade')) $('f-grade').value = params.get('grade');
+    if (params.get('q')) $('f-q').value = params.get('q');
+
     $('f-grade').addEventListener('change', apply);
     $('f-q').addEventListener('input', apply);
     $('prev').addEventListener('click', function () { if (state.page > 0) { state.page--; renderTable(); } });
     $('next').addEventListener('click', function () {
       if ((state.page + 1) * PAGE < state.view.length) { state.page++; renderTable(); } });
     $('btn-chain').addEventListener('click', verifyChain);
+    $('btn-tamper').addEventListener('click', tamper);
+    $('btn-reset').addEventListener('click', reset);
     $('regTable').addEventListener('click', function (e) {
       var tr = e.target.closest('tr[data-id]');
-      if (tr) { var l = state.all.find(function (x) { return x.label_id === tr.dataset.id; }); if (l) detail(l); }
+      if (tr) { var l = state.all.find(function (x) { return x.label_id === tr.dataset.id; }); if (l) { detail(l); syncURL(); } }
     });
+
     apply();
     verifyChain();
-    var q = new URLSearchParams(location.search).get('id');
-    if (q) { var hit = state.all.find(function (x) { return x.label_id === q; }); if (hit) detail(hit); }
+    var id = params.get('id');
+    if (id) { var hit = state.all.find(function (x) { return x.label_id === id; }); if (hit) detail(hit); }
+    // ?tamper=1 tampers a random record; ?tamper=<label_id> tampers that one.
+    // Shareable, so the demonstration can be linked instead of described.
+    var tp = params.get('tamper');
+    if (tp) {
+      if (tp !== '1') {
+        var target = state.all.find(function (x) { return x.label_id === tp; });
+        if (target) state.sel = target.label_id;
+      }
+      tamper();
+    }
   }).catch(function (e) {
     $('f-status').textContent = 'register unavailable: ' + e.message;
   });
