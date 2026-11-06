@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /server/
+
+Sitemap: https://zerocoffee.org.cn/sitemap.xml
