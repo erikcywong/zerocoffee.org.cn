@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The verified unit — ZeroCarbon Verify</title>
+<meta name="description" content="The smallest checkable thing in a carbon claim: one batch, one boundary, one ledger entry, one recomputable hash. Grades, fields, who pays.">>
+<link rel="canonical" href="https://zerocoffee.org.cn/industries/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="util"><div class="wrap">
+  <span>Methodology &amp; public registry · Hong Kong</span>
+  <span class="badge warn">Not a certification body · no certification conclusions</span>
+  <div class="right"><a href="../establishment/index.html">Establishment</a><a href="../registry/index.html">Label registry</a></div>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/><path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/><path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg>
+    <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span></a>
+  <nav class="main">
+    <div class="item"><a href="../services/index.html">Services</a></div>
+    <div class="item on"><a href="../industries/index.html">Industries</a></div>
+    <div class="item"><a href="../platform/index.html">Digital platform</a></div>
+    <div class="item"><a href="../simulator/index.html">Simulator</a></div>
+    <div class="item"><a href="../insights/index.html">Insights</a></div>
+    <div class="item"><a href="../about/index.html">About</a></div>
+    <div class="item"><a href="../certify/index.html">Case</a></div>
+    
+  </nav>
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../registry/index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a><button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+  <div class="nav-drawer" id="navDrawer"><div class="wrap inner">
+      <a href="../services/index.html">Services</a>
+      <a href="../industries/index.html">Industries</a>
+      <a href="../platform/index.html">Digital platform</a>
+      <a href="../simulator/index.html">Simulator</a>
+      <a href="../insights/index.html">Insights</a>
+      <a href="../about/index.html">About</a>
+      <a href="../certify/index.html">Case</a>
+      <div class="util-links"><a href="../registry/index.html">Verify a label</a><a href="../contact/index.html">Request a quote</a><a href="../admin/index.html">Operator console</a><a href="../establishment/index.html">Establishment</a></div>
+  </div></div>
+</header>
+<div class="crumb"><div class="wrap"><a href="../index.html">Home</a><span class="sep">/</span><span class="here">Verified Unit</span></div></div>
+<section>
+  <div class="wrap">
+<div class="art">
+<div class="eyebrow">Standard · Verified Unit</div>
+<h1 style="font-size:34px;letter-spacing:-1px;margin:10px 0 12px">The verified unit</h1>
+<p class="lead">A carbon claim is only as good as the smallest thing anyone can check. This page defines
+that thing: the verified unit — one batch, one boundary, one ledger entry, one recomputable hash.</p>
+
+<div class="note"><b>What a unit is for.</b> It is the unit our evidence layer sells. A buyer who needs primary
+scope-3 data pays per unit; the grower pays nothing. It is not a credit, not an offset, and not a certificate.</div>
+
+<h2>What makes a unit verifiable</h2>
+<table class="data"><thead><tr><th>Property</th><th>What it means in practice</th><th>Fails when</th></tr></thead><tbody>
+<tr><td>Metered</td><td>The number comes from a meter, not from a spend-based estimate</td><td>Only invoices exist for the energy</td></tr>
+<tr><td>Bounded</td><td>Boundary and functional unit are fixed before the data arrives</td><td>The boundary is chosen after seeing the result</td></tr>
+<tr><td>Attributed</td><td>One owner, one location, one batch id — no allocation by proportion</td><td>A batch is split across sites without a rule</td></tr>
+<tr><td>Committed</td><td>The record is hashed into the chain at issuance and cannot be edited afterwards</td><td>The number is revised silently</td></tr>
+<tr><td>Recomputable</td><td>A third party reproduces the hash from published fields, without our server</td><td>Verification requires asking us</td></tr>
+</tbody></table>
+<p>A unit that fails any one of these is not a weaker unit. It is not a unit.</p>
+
+<h2>What a unit carries</h2>
+<table class="data"><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><span class="mono">unit_id</span></td><td>Batch identifier, immutable once issued</td></tr>
+<tr><td><span class="mono">boundary</span></td><td>Cradle-to-gate or whichever boundary the method fixes</td></tr>
+<tr><td><span class="mono">functional_unit</span></td><td>kgCO₂e per plantlet, per kg, per unit of output</td></tr>
+<tr><td><span class="mono">metered_share</span></td><td>Share of the footprint from primary data; decides the grade</td></tr>
+<tr><td><span class="mono">grade</span></td><td>A / B / C, set by the metered share, not by the customer</td></tr>
+<tr><td><span class="mono">hash</span>, <span class="mono">prev_hash</span></td><td>FNV-1a over canonical fields plus the previous record</td></tr>
+<tr><td><span class="mono">method</span></td><td>Method id and version the number was produced under</td></tr>
+</tbody></table>
+
+<h2>Grades</h2>
+<table class="data"><thead><tr><th>Grade</th><th>Metered share</th><th>What it buys</th></tr></thead><tbody>
+<tr><td>A</td><td>≥ 70%</td><td>Primary scope-3 line item, admissible in most supplier programmes</td></tr>
+<tr><td>B</td><td>≥ 45%</td><td>Usable with a stated share of secondary factors</td></tr>
+<tr><td>C</td><td>&lt; 45%</td><td>Directional; discloses how much is estimated</td></tr>
+</tbody></table>
+<p>The grade is a statement about data, not about the organisation. A C-grade unit from a well-run site is
+still a C; an A-grade unit from a site we have never met requires the metering to prove itself first.</p>
+
+<h2>Who pays</h2>
+<table class="data"><thead><tr><th>Party</th><th>Pays</th><th>Why</th></tr></thead><tbody>
+<tr><td>The buyer</td><td>¥40–80 per batch (A ¥80 / B ¥60 / C ¥40)</td><td>It needs primary scope-3 data, and its own reporting obligation creates the demand</td></tr>
+<tr><td>The grower</td><td>Nothing for the unit</td><td>The measurement is a by-product of running the site; charging the supplier builds the wrong incentive</td></tr>
+</tbody></table>
+<p>This is the fee schedule, published rather than negotiated. See the
+<a href="../establishment/fees.html">fee schedule</a> for the buyer-side table and what the signature share is.</p>
+
+<h2>What a unit is not</h2>
+<table class="data"><thead><tr><th>Not</th><th>Why it matters</th></tr></thead><tbody>
+<tr><td>A carbon credit or offset</td><td>Nothing is traded, retired or claimed against another party's emissions</td></tr>
+<tr><td>A certification</td><td>No accreditation body has certified this body; conclusions are countersigned by a partner</td></tr>
+<tr><td>Comparable across methods</td><td>A unit is comparable only inside the method version that produced it</td></tr>
+</tbody></table>
+
+</div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Methodology and public registry for carbon claims in agricultural supply chains. We publish the method, the evidence grades and the register; certification conclusions are signed by accredited partners. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
+    <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a><a href="../eudr/index.html">EUDR evidence pack</a>
+        <a href="../verified-unit/index.html">The verified unit</a>
+        <a href="../registry-eaas/index.html">Registry as a service</a>
+        </div>
+    <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../establishment/conditions.html">Conditions of establishment</a><a href="../establishment/governance.html">Impartiality</a><a href="../contact/index.html">Contact</a></div>
+    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../simulator/index.html">Revenue simulator</a><a href="../establishment/index.html">Establishment file</a></div>
+  </div>
+  <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
