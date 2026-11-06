@@ -150,21 +150,20 @@
         <button data-lang="zh">中文</button>
       </div>
     </div>
-    <video id="homeFilm" controls playsinline preload="metadata" poster="assets/video/home-en.jpg">
-      <source id="homeFilmSrc" src="assets/video/home-en.mp4" type="video/mp4">
+    <video id="homeFilm" controls playsinline preload="metadata" poster="https://github.com/erikcywong/zerocoffee.org.cn/releases/download/media-v2/home-en.jpg">
+      <source id="homeFilmSrc" src="https://github.com/erikcywong/zerocoffee.org.cn/releases/download/media-v2/home-en.mp4" type="video/mp4">
     </video>
     <p class="cap" id="homeFilmCap"><b>Narrated overview.</b> Every figure quoted is on this site: the register holds twenty modelled reference records,
       the chain is recomputable in your browser, and the method is published. Accreditation is
       still in progress, and the film says so.</p>
     <p class="cap" style="margin-top:6px">
-      <a href="assets/video/home-70-en.mp4">70-second cut</a> ·
-      <a href="assets/video/home-vert-en.mp4">vertical 9:16</a> ·
+      <a href="https://github.com/erikcywong/zerocoffee.org.cn/releases/download/media-v2/home-70-en.mp4">70-second cut</a> ·
+      <a href="https://github.com/erikcywong/zerocoffee.org.cn/releases/download/media-v2/home-vert-en.mp4">vertical 9:16</a> ·
       captions are burned in, so it reads with the sound off
     </p>
     <p class="cap" style="margin-top:2px;font-size:11.5px;opacity:.8">Original score composed for this film. No licensed or library audio is used, and no attribution is required anywhere it is shown.</p>
-    <p class="cap" style="margin-top:2px;font-size:11.5px;opacity:.8">Recorded 2026-11-06. The film says the register holds “one live label and nineteen reference records”; the file actually contains 20 modelled records, and the live label is verified separately on the platform. The film is kept as a dated record rather than silently re-cut.</p>
-
-  </div>
+    <p class="cap" style="margin-top:2px;font-size:11.5px;opacity:.8">First cut 2026-11-06; re-cut 2026-11-07 so the narration and the register tile match the dataset (20 modelled reference records, live label verified separately).</p>
+</div>
 </section>
 <script>
 (function () {
@@ -173,7 +172,7 @@
   var src = document.getElementById('homeFilmSrc');
   var caps = {
     en: '<b>Narrated overview.</b> Every figure quoted is on this site: the register holds 20 modelled reference records, the chain is recomputable in your browser, and the method is published. Accreditation is still in progress, and the film says so.',
-    zh: '<b>中文旁白。</b>片中引用的每一个数字都在本站可以查到：登记簿有 1 张实签标签与 19 条参考记录、哈希链可在你的浏览器里重算、方法学全文公开。认可仍在进行中，片子也如实说了这一点。'
+    zh: '<b>中文旁白。</b>片中引用的每一个数字都在本站可以查到：登记簿有 20 条模型化参考记录、实签标签在平台页单独验证、哈希链可在你的浏览器里重算、方法学全文公开。认可仍在进行中，片子也如实说了这一点。'
   };
   document.getElementById('filmSwitch').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
@@ -182,8 +181,8 @@
       x.classList.toggle('on', x === b);
     });
     var t = v.currentTime, playing = !v.paused;
-    src.src = 'assets/video/home-' + l + '.mp4';
-    v.poster = 'assets/video/home-' + l + '.jpg';
+    src.src = 'https://github.com/erikcywong/zerocoffee.org.cn/releases/download/media-v2/home-' + l + '.mp4';
+    v.poster = 'https://github.com/erikcywong/zerocoffee.org.cn/releases/download/media-v2/home-' + l + '.jpg';
     document.getElementById('homeFilmCap').innerHTML = caps[l];
     v.load(); v.currentTime = t;
     if (playing) v.play().catch(function () {});
