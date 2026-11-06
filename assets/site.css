@@ -179,6 +179,7 @@ fieldset{border:0}
   border-radius:2px;letter-spacing:.4px}
 .badge.warn{background:#fdf3e2;color:var(--amber);border:1px solid #f0d9ae}
 .badge.ok{background:#e6f6f4;color:#04726d;border:1px solid #b9e5e1}
+.badge.bad{background:#fdeaea;color:#b42318;border:1px solid #f3c2be}
 .badge.info{background:#eaf1fb;color:var(--blue);border:1px solid #cfdff5}
 .note{font-size:13px;color:var(--gray);line-height:1.7}
 table.data{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0 18px}
