@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EUDR evidence pack — ZeroCarbon Verify</title>
+<meta name="description" content="Container-level EUDR evidence pack: plot, batch and container hashed together, recomputable in a browser. We package the evidence; the importer files the statement.">>
+<link rel="canonical" href="https://zerocoffee.org.cn/industries/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="util"><div class="wrap">
+  <span>Methodology &amp; public registry · Hong Kong</span>
+  <span class="badge warn">Not a certification body · no certification conclusions</span>
+  <div class="right"><a href="../establishment/index.html">Establishment</a><a href="../registry/index.html">Label registry</a></div>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/><path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/><path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg>
+    <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span></a>
+  <nav class="main">
+    <div class="item"><a href="../services/index.html">Services</a></div>
+    <div class="item on"><a href="../industries/index.html">Industries</a></div>
+    <div class="item"><a href="../platform/index.html">Digital platform</a></div>
+    <div class="item"><a href="../simulator/index.html">Simulator</a></div>
+    <div class="item"><a href="../insights/index.html">Insights</a></div>
+    <div class="item"><a href="../about/index.html">About</a></div>
+    <div class="item"><a href="../certify/index.html">Certify</a></div>
+    
+  </nav>
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../registry/index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a><button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+  <div class="nav-drawer" id="navDrawer"><div class="wrap inner">
+      <a href="../services/index.html">Services</a>
+      <a href="../industries/index.html">Industries</a>
+      <a href="../platform/index.html">Digital platform</a>
+      <a href="../simulator/index.html">Simulator</a>
+      <a href="../insights/index.html">Insights</a>
+      <a href="../about/index.html">About</a>
+      <a href="../certify/index.html">Certify</a>
+      <div class="util-links"><a href="../registry/index.html">Verify a label</a><a href="../contact/index.html">Request a quote</a><a href="../admin/index.html">Operator console</a><a href="../establishment/index.html">Establishment</a></div>
+  </div></div>
+</header>
+<div class="crumb"><div class="wrap"><a href="../index.html">Home</a><span class="sep">/</span><span class="here">EUDR evidence pack</span></div></div>
+<section>
+  <div class="wrap">
+<div class="art">
+<div class="eyebrow">Services · EUDR evidence pack</div>
+<h1 style="font-size:34px;letter-spacing:-1px;margin:10px 0 12px">Container-level EUDR evidence pack</h1>
+<p class="lead">The EU regulation asks the importer to file a due-diligence statement for every shipment.
+What it does not provide is the evidence underneath that statement. We supply it: plot, batch and container,
+each step hashed to the one before, recomputable by anyone.</p>
+
+<div class="note"><b>Scope, stated first.</b> We do not decide whether land was deforested, and we do not file
+the due-diligence statement — that is the EU operator's act. We package and freeze the evidence the operator
+and its certifier work from. Any conclusion that needs a signature is countersigned by a licensed partner.</div>
+
+<h2>What the regulation asks, and who provides it</h2>
+<table class="data"><thead><tr><th>Requirement</th><th>What it means</th><th>Provided by</th></tr></thead><tbody>
+<tr><td>Scope</td><td>Coffee (CN 0901) is in Annex I, including roasted and decaffeinated derivatives</td><td>The regulation</td></tr>
+<tr><td>Plot coordinates</td><td>Geographic coordinates for every plot; a polygon above 4 hectares (≥ 6 decimal places)</td><td>Grower or cooperative</td></tr>
+<tr><td>Deforestation-free</td><td>No deforestation or forest degradation after 2020-12-31</td><td>Satellite imagery plus the operator's due diligence</td></tr>
+<tr><td>Legal production</td><td>Tenure, labour, tax and environmental permits under local law</td><td>Grower plus local counsel</td></tr>
+<tr><td>Due diligence statement</td><td>Filed in the EU system, reference number travels with the goods</td><td>The EU operator (importer)</td></tr>
+</tbody></table>
+<p>Timing: the Commission postponed application in late 2024, and simplification is still under discussion.
+The EUR-Lex text governs; this page does not restate dates.</p>
+
+<h2>What we supply</h2>
+<table class="data"><thead><tr><th>Layer</th><th>Deliverable</th><th>Status</th></tr></thead><tbody>
+<tr><td>Plot binding</td><td><span class="mono">plot_id</span> and its polygon written into the batch manifest and hashed with the label record</td><td>Design</td></tr>
+<tr><td>Transport chain</td><td>Batch → container → bill of lading, each hop committed to the hash-chained ledger</td><td>Design</td></tr>
+<tr><td>Evidence pack</td><td>One per container: coordinates, batch ledger digest, footprint label, review record</td><td>Design</td></tr>
+<tr><td>Public verification</td><td>Anyone recomputes the pack from the container id and the first 12 hash digits, in a browser</td><td>Runs on the existing register</td></tr>
+<tr><td>DDS field mapping</td><td>Our fields mapped to the keys an importer needs when filing</td><td>Design</td></tr>
+</tbody></table>
+
+<h2>What we do not do</h2>
+<table class="data"><thead><tr><th>Not this</th><th>Why</th></tr></thead><tbody>
+<tr><td>Decide deforestation</td><td>The finding rests on satellite evidence and the operator's due diligence</td></tr>
+<tr><td>File the DDS</td><td>It is the EU operator's legal act, not the supplier's</td></tr>
+<tr><td>Stand in for certification</td><td>No accreditation body has certified this body; no equivalence with EUDR compliance is claimed</td></tr>
+<tr><td>Survey plots</td><td>Coordinates come from the grower; we validate format and consistency</td></tr>
+<tr><td>Guarantee clearance</td><td>Evidence lowers the risk of refusal; it does not displace the authority's judgement</td></tr>
+</tbody></table>
+
+<h2>Price</h2>
+<table class="data"><thead><tr><th>Deliverable</th><th>Contents</th><th>Fee (CNY)</th></tr></thead><tbody>
+<tr><td>Container release pack</td><td>Plot coordinates, batch ledger digest, footprint label, review record</td><td>3,000–8,000 / container, or 0.2–0.5% of cargo value</td></tr>
+<tr><td>Batch compliance file</td><td>Several containers of one batch, for the annual audit</td><td>8,000–15,000 / quarter</td></tr>
+<tr><td>Public verification</td><td>Recomputation without an account</td><td>Included</td></tr>
+</tbody></table>
+<p>Per container, not per batch: enforcement acts on the shipment, and clearance happens at container level.
+A per-batch fee would split one container into a dozen billing points and add friction to the thing the buyer
+needs to do quickly.</p>
+
+<h2>Known gaps</h2>
+<table class="data"><thead><tr><th>Gap</th><th>What it blocks</th></tr></thead><tbody>
+<tr><td>No plot-data interface yet</td><td>The polygon exists only in the design</td></tr>
+<tr><td>No satellite baseline connected</td><td>Forest cover at 2020-12-31 cannot be checked automatically</td></tr>
+<tr><td>Legality files need counsel</td><td>We archive and hash them; we do not review them</td></tr>
+<tr><td>No signing partner contracted</td><td>No conclusion may be issued under this pack until one is</td></tr>
+</tbody></table>
+
+<div class="note warn"><b>Where this sits in the two-track plan.</b> The pack is an evidence product: it can be
+sold without accreditation because it makes no certification claim. The moment a buyer asks for a signed
+conclusion, that comes from the licensed partner, not from us — see the
+<a href="../establishment/two-track.html">two-track plan</a>.</div>
+
+</div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Methodology and public registry for carbon claims in agricultural supply chains. We publish the method, the evidence grades and the register; certification conclusions are signed by accredited partners. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
+    <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a><a href="../eudr/index.html">EUDR evidence pack</a>
+        </div>
+    <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../establishment/conditions.html">Conditions of establishment</a><a href="../establishment/governance.html">Impartiality</a><a href="../contact/index.html">Contact</a></div>
+    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../simulator/index.html">Revenue simulator</a><a href="../establishment/index.html">Establishment file</a></div>
+  </div>
+  <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
