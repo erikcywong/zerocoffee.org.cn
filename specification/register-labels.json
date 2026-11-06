@@ -1,0 +1,1157 @@
+{
+ "generated": "2026-11-06T15:09:54",
+ "register": "ZeroCarbon Verify (HK) — demonstration register",
+ "note": "Simulated reference portfolio. Generated to exercise the register and the hash-chain verification logic; these are not certification decisions.",
+ "method": "CJV-MTH-1.0",
+ "method_hash": "9b12abef",
+ "count": 20,
+ "sectors": {
+  "COF": "Coffee & agriculture",
+  "FNB": "Food & beverage",
+  "MFG": "Manufacturing",
+  "HRT": "Horticulture"
+ },
+ "head": "54980f3d",
+ "labels": [
+  {
+   "label_id": "ZC-COF-2026-0001",
+   "sector": "COF",
+   "sector_name": "Coffee & agriculture",
+   "holder": "Sidama-02",
+   "batch": "AP-8885",
+   "units": 605,
+   "unit_name": "plantlet",
+   "kgco2e_per_unit": 0.307,
+   "kgco2e_total": 185.735,
+   "baseline_per_unit": 0.449,
+   "reduction_pct": 31.6,
+   "data_quality": 74.8,
+   "grade": "A",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 80,
+   "issued": "2026-02-10",
+   "expires": "2027-02-10",
+   "prev": "genesis",
+   "hash": "889fdaf6",
+   "payload": "AP-8885|185.735|0.307|A",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 61.5,
+     "kgco2e": 114.113
+    },
+    {
+     "key": "embedded_hardware",
+     "label": "Embedded hardware",
+     "share_pct": 17.9,
+     "kgco2e": 33.213
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 10.3,
+     "kgco2e": 19.112
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 6.2,
+     "kgco2e": 11.504
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.2,
+     "kgco2e": 7.793
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-COF-2026-0002",
+   "sector": "COF",
+   "sector_name": "Coffee & agriculture",
+   "holder": "SonLa-09",
+   "batch": "AP-2856",
+   "units": 875,
+   "unit_name": "plantlet",
+   "kgco2e_per_unit": 0.338,
+   "kgco2e_total": 295.75,
+   "baseline_per_unit": 0.449,
+   "reduction_pct": 24.7,
+   "data_quality": 55.5,
+   "grade": "B",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 60,
+   "issued": "2026-02-23",
+   "expires": "2027-02-23",
+   "prev": "889fdaf6",
+   "hash": "f24da836",
+   "payload": "AP-2856|295.75|0.338|B",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 61.5,
+     "kgco2e": 181.705
+    },
+    {
+     "key": "embedded_hardware",
+     "label": "Embedded hardware",
+     "share_pct": 17.9,
+     "kgco2e": 52.886
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 10.3,
+     "kgco2e": 30.432
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 6.2,
+     "kgco2e": 18.318
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.2,
+     "kgco2e": 12.409
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-COF-2026-0003",
+   "sector": "COF",
+   "sector_name": "Coffee & agriculture",
+   "holder": "Sidama-02",
+   "batch": "AP-8397",
+   "units": 576,
+   "unit_name": "plantlet",
+   "kgco2e_per_unit": 0.336,
+   "kgco2e_total": 193.536,
+   "baseline_per_unit": 0.436,
+   "reduction_pct": 22.9,
+   "data_quality": 68.1,
+   "grade": "B",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 60,
+   "issued": "2026-03-09",
+   "expires": "2027-03-09",
+   "prev": "f24da836",
+   "hash": "34ef488d",
+   "payload": "AP-8397|193.536|0.336|B",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 61.5,
+     "kgco2e": 118.906
+    },
+    {
+     "key": "embedded_hardware",
+     "label": "Embedded hardware",
+     "share_pct": 17.9,
+     "kgco2e": 34.608
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 10.3,
+     "kgco2e": 19.914
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 6.2,
+     "kgco2e": 11.987
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.2,
+     "kgco2e": 8.12
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-MFG-2026-0004",
+   "sector": "MFG",
+   "sector_name": "Manufacturing",
+   "holder": "Foundry-02",
+   "batch": "MF-9080",
+   "units": 337,
+   "unit_name": "unit",
+   "kgco2e_per_unit": 1.132,
+   "kgco2e_total": 381.484,
+   "baseline_per_unit": 0.972,
+   "reduction_pct": -16.5,
+   "data_quality": 41.2,
+   "grade": "C",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 40,
+   "issued": "2026-03-22",
+   "expires": "2027-03-22",
+   "prev": "34ef488d",
+   "hash": "ef6c5b22",
+   "payload": "MF-9080|381.484|1.132|C",
+   "lines": [
+    {
+     "key": "line_electricity",
+     "label": "Line electricity",
+     "share_pct": 78.0,
+     "kgco2e": 297.558
+    },
+    {
+     "key": "process_heat",
+     "label": "Process heat",
+     "share_pct": 9.0,
+     "kgco2e": 34.334
+    },
+    {
+     "key": "compressed_air",
+     "label": "Compressed air",
+     "share_pct": 6.0,
+     "kgco2e": 22.889
+    },
+    {
+     "key": "material_input",
+     "label": "Material input",
+     "share_pct": 4.0,
+     "kgco2e": 15.259
+    },
+    {
+     "key": "outbound_logistics",
+     "label": "Outbound logistics",
+     "share_pct": 3.0,
+     "kgco2e": 11.445
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-MFG-2026-0005",
+   "sector": "MFG",
+   "sector_name": "Manufacturing",
+   "holder": "Injection-12",
+   "batch": "MF-2078",
+   "units": 4007,
+   "unit_name": "unit",
+   "kgco2e_per_unit": 0.805,
+   "kgco2e_total": 3225.635,
+   "baseline_per_unit": 1.32,
+   "reduction_pct": 39.0,
+   "data_quality": 90.4,
+   "grade": "A",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 80,
+   "issued": "2026-04-05",
+   "expires": "2027-04-05",
+   "prev": "ef6c5b22",
+   "hash": "c1ed9001",
+   "payload": "MF-2078|3225.635|0.805|A",
+   "lines": [
+    {
+     "key": "line_electricity",
+     "label": "Line electricity",
+     "share_pct": 78.0,
+     "kgco2e": 2515.995
+    },
+    {
+     "key": "process_heat",
+     "label": "Process heat",
+     "share_pct": 9.0,
+     "kgco2e": 290.307
+    },
+    {
+     "key": "compressed_air",
+     "label": "Compressed air",
+     "share_pct": 6.0,
+     "kgco2e": 193.538
+    },
+    {
+     "key": "material_input",
+     "label": "Material input",
+     "share_pct": 4.0,
+     "kgco2e": 129.025
+    },
+    {
+     "key": "outbound_logistics",
+     "label": "Outbound logistics",
+     "share_pct": 3.0,
+     "kgco2e": 96.769
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-FNB-2026-0006",
+   "sector": "FNB",
+   "sector_name": "Food & beverage",
+   "holder": "Mill-07",
+   "batch": "FN-7275",
+   "units": 7622,
+   "unit_name": "kg product",
+   "kgco2e_per_unit": 2.379,
+   "kgco2e_total": 18132.738,
+   "baseline_per_unit": 1.45,
+   "reduction_pct": -64.1,
+   "data_quality": 69.0,
+   "grade": "B",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 60,
+   "issued": "2026-04-18",
+   "expires": "2027-04-18",
+   "prev": "c1ed9001",
+   "hash": "0345ac2a",
+   "payload": "FN-7275|18132.738|2.379|B",
+   "lines": [
+    {
+     "key": "ingredient_production",
+     "label": "Ingredient production",
+     "share_pct": 52.0,
+     "kgco2e": 9429.024
+    },
+    {
+     "key": "processing_energy",
+     "label": "Processing energy",
+     "share_pct": 22.0,
+     "kgco2e": 3989.202
+    },
+    {
+     "key": "cold_chain",
+     "label": "Cold chain",
+     "share_pct": 9.0,
+     "kgco2e": 1631.946
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 11.0,
+     "kgco2e": 1994.601
+    },
+    {
+     "key": "inbound_transport",
+     "label": "Inbound transport",
+     "share_pct": 6.0,
+     "kgco2e": 1087.964
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-MFG-2026-0007",
+   "sector": "MFG",
+   "sector_name": "Manufacturing",
+   "holder": "Assembly-03",
+   "batch": "MF-8807",
+   "units": 1600,
+   "unit_name": "unit",
+   "kgco2e_per_unit": 0.273,
+   "kgco2e_total": 436.8,
+   "baseline_per_unit": 1.582,
+   "reduction_pct": 82.7,
+   "data_quality": 80.8,
+   "grade": "A",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 80,
+   "issued": "2026-05-02",
+   "expires": "2027-05-02",
+   "prev": "0345ac2a",
+   "hash": "4cb468ef",
+   "payload": "MF-8807|436.8|0.273|A",
+   "lines": [
+    {
+     "key": "line_electricity",
+     "label": "Line electricity",
+     "share_pct": 78.0,
+     "kgco2e": 340.704
+    },
+    {
+     "key": "process_heat",
+     "label": "Process heat",
+     "share_pct": 9.0,
+     "kgco2e": 39.312
+    },
+    {
+     "key": "compressed_air",
+     "label": "Compressed air",
+     "share_pct": 6.0,
+     "kgco2e": 26.208
+    },
+    {
+     "key": "material_input",
+     "label": "Material input",
+     "share_pct": 4.0,
+     "kgco2e": 17.472
+    },
+    {
+     "key": "outbound_logistics",
+     "label": "Outbound logistics",
+     "share_pct": 3.0,
+     "kgco2e": 13.104
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-COF-2026-0008",
+   "sector": "COF",
+   "sector_name": "Coffee & agriculture",
+   "holder": "Sidama-02",
+   "batch": "AP-7099",
+   "units": 529,
+   "unit_name": "plantlet",
+   "kgco2e_per_unit": 0.16,
+   "kgco2e_total": 84.64,
+   "baseline_per_unit": 0.459,
+   "reduction_pct": 65.1,
+   "data_quality": 34.1,
+   "grade": "C",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 40,
+   "issued": "2026-05-15",
+   "expires": "2027-05-15",
+   "prev": "4cb468ef",
+   "hash": "e68b8a94",
+   "payload": "AP-7099|84.64|0.16|C",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 61.5,
+     "kgco2e": 52.002
+    },
+    {
+     "key": "embedded_hardware",
+     "label": "Embedded hardware",
+     "share_pct": 17.9,
+     "kgco2e": 15.135
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 10.3,
+     "kgco2e": 8.709
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 6.2,
+     "kgco2e": 5.242
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.2,
+     "kgco2e": 3.551
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-COF-2026-0009",
+   "sector": "COF",
+   "sector_name": "Coffee & agriculture",
+   "holder": "Antioquia-08",
+   "batch": "AP-3591",
+   "units": 487,
+   "unit_name": "plantlet",
+   "kgco2e_per_unit": 0.285,
+   "kgco2e_total": 138.795,
+   "baseline_per_unit": 0.432,
+   "reduction_pct": 34.0,
+   "data_quality": 36.9,
+   "grade": "C",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 40,
+   "issued": "2026-05-29",
+   "expires": "2027-05-29",
+   "prev": "e68b8a94",
+   "hash": "22125223",
+   "payload": "AP-3591|138.795|0.285|C",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 61.5,
+     "kgco2e": 85.274
+    },
+    {
+     "key": "embedded_hardware",
+     "label": "Embedded hardware",
+     "share_pct": 17.9,
+     "kgco2e": 24.819
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 10.3,
+     "kgco2e": 14.282
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 6.2,
+     "kgco2e": 8.597
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.2,
+     "kgco2e": 5.824
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-FNB-2026-0010",
+   "sector": "FNB",
+   "sector_name": "Food & beverage",
+   "holder": "Roastery-02",
+   "batch": "FN-4227",
+   "units": 5300,
+   "unit_name": "kg product",
+   "kgco2e_per_unit": 1.682,
+   "kgco2e_total": 8914.6,
+   "baseline_per_unit": 2.617,
+   "reduction_pct": 35.7,
+   "data_quality": 36.7,
+   "grade": "C",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 40,
+   "issued": "2026-06-11",
+   "expires": "2027-06-11",
+   "prev": "22125223",
+   "hash": "65843126",
+   "payload": "FN-4227|8914.6|1.682|C",
+   "lines": [
+    {
+     "key": "ingredient_production",
+     "label": "Ingredient production",
+     "share_pct": 52.0,
+     "kgco2e": 4635.592
+    },
+    {
+     "key": "processing_energy",
+     "label": "Processing energy",
+     "share_pct": 22.0,
+     "kgco2e": 1961.212
+    },
+    {
+     "key": "cold_chain",
+     "label": "Cold chain",
+     "share_pct": 9.0,
+     "kgco2e": 802.314
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 11.0,
+     "kgco2e": 980.606
+    },
+    {
+     "key": "inbound_transport",
+     "label": "Inbound transport",
+     "share_pct": 6.0,
+     "kgco2e": 534.876
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-FNB-2026-0011",
+   "sector": "FNB",
+   "sector_name": "Food & beverage",
+   "holder": "Brewery-04",
+   "batch": "FN-3974",
+   "units": 3423,
+   "unit_name": "kg product",
+   "kgco2e_per_unit": 1.865,
+   "kgco2e_total": 6383.895,
+   "baseline_per_unit": 1.104,
+   "reduction_pct": -68.9,
+   "data_quality": 47.4,
+   "grade": "B",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 60,
+   "issued": "2026-06-25",
+   "expires": "2027-06-25",
+   "prev": "65843126",
+   "hash": "cbce14bc",
+   "payload": "FN-3974|6383.895|1.865|B",
+   "lines": [
+    {
+     "key": "ingredient_production",
+     "label": "Ingredient production",
+     "share_pct": 52.0,
+     "kgco2e": 3319.625
+    },
+    {
+     "key": "processing_energy",
+     "label": "Processing energy",
+     "share_pct": 22.0,
+     "kgco2e": 1404.457
+    },
+    {
+     "key": "cold_chain",
+     "label": "Cold chain",
+     "share_pct": 9.0,
+     "kgco2e": 574.551
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 11.0,
+     "kgco2e": 702.228
+    },
+    {
+     "key": "inbound_transport",
+     "label": "Inbound transport",
+     "share_pct": 6.0,
+     "kgco2e": 383.034
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-HRT-2026-0012",
+   "sector": "HRT",
+   "sector_name": "Horticulture",
+   "holder": "Greenhouse-02",
+   "batch": "HR-9327",
+   "units": 130,
+   "unit_name": "tray",
+   "kgco2e_per_unit": 0.581,
+   "kgco2e_total": 75.53,
+   "baseline_per_unit": 2.278,
+   "reduction_pct": 74.5,
+   "data_quality": 59.1,
+   "grade": "B",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 60,
+   "issued": "2026-07-08",
+   "expires": "2027-07-08",
+   "prev": "cbce14bc",
+   "hash": "9cfa98b6",
+   "payload": "HR-9327|75.53|0.581|B",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 58.0,
+     "kgco2e": 43.807
+    },
+    {
+     "key": "substrate",
+     "label": "Substrate",
+     "share_pct": 18.0,
+     "kgco2e": 13.595
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 12.0,
+     "kgco2e": 9.064
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 8.0,
+     "kgco2e": 6.042
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.0,
+     "kgco2e": 3.021
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-MFG-2026-0013",
+   "sector": "MFG",
+   "sector_name": "Manufacturing",
+   "holder": "Coating-08",
+   "batch": "MF-1680",
+   "units": 1026,
+   "unit_name": "unit",
+   "kgco2e_per_unit": 0.705,
+   "kgco2e_total": 723.33,
+   "baseline_per_unit": 1.902,
+   "reduction_pct": 62.9,
+   "data_quality": 65.4,
+   "grade": "B",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 60,
+   "issued": "2026-07-22",
+   "expires": "2027-07-22",
+   "prev": "9cfa98b6",
+   "hash": "daf84846",
+   "payload": "MF-1680|723.33|0.705|B",
+   "lines": [
+    {
+     "key": "line_electricity",
+     "label": "Line electricity",
+     "share_pct": 78.0,
+     "kgco2e": 564.197
+    },
+    {
+     "key": "process_heat",
+     "label": "Process heat",
+     "share_pct": 9.0,
+     "kgco2e": 65.1
+    },
+    {
+     "key": "compressed_air",
+     "label": "Compressed air",
+     "share_pct": 6.0,
+     "kgco2e": 43.4
+    },
+    {
+     "key": "material_input",
+     "label": "Material input",
+     "share_pct": 4.0,
+     "kgco2e": 28.933
+    },
+    {
+     "key": "outbound_logistics",
+     "label": "Outbound logistics",
+     "share_pct": 3.0,
+     "kgco2e": 21.7
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-HRT-2026-0014",
+   "sector": "HRT",
+   "sector_name": "Horticulture",
+   "holder": "Hydro-05",
+   "batch": "HR-3360",
+   "units": 324,
+   "unit_name": "tray",
+   "kgco2e_per_unit": 0.843,
+   "kgco2e_total": 273.132,
+   "baseline_per_unit": 1.998,
+   "reduction_pct": 57.8,
+   "data_quality": 39.9,
+   "grade": "C",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 40,
+   "issued": "2026-08-04",
+   "expires": "2027-08-04",
+   "prev": "daf84846",
+   "hash": "1283f179",
+   "payload": "HR-3360|273.132|0.843|C",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 58.0,
+     "kgco2e": 158.417
+    },
+    {
+     "key": "substrate",
+     "label": "Substrate",
+     "share_pct": 18.0,
+     "kgco2e": 49.164
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 12.0,
+     "kgco2e": 32.776
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 8.0,
+     "kgco2e": 21.851
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.0,
+     "kgco2e": 10.925
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-COF-2026-0015",
+   "sector": "COF",
+   "sector_name": "Coffee & agriculture",
+   "holder": "Kiambu-06",
+   "batch": "AP-5632",
+   "units": 685,
+   "unit_name": "plantlet",
+   "kgco2e_per_unit": 0.204,
+   "kgco2e_total": 139.74,
+   "baseline_per_unit": 0.419,
+   "reduction_pct": 51.3,
+   "data_quality": 51.3,
+   "grade": "B",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 60,
+   "issued": "2026-08-18",
+   "expires": "2027-08-18",
+   "prev": "1283f179",
+   "hash": "e0b0d6aa",
+   "payload": "AP-5632|139.74|0.204|B",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 61.5,
+     "kgco2e": 85.854
+    },
+    {
+     "key": "embedded_hardware",
+     "label": "Embedded hardware",
+     "share_pct": 17.9,
+     "kgco2e": 24.988
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 10.3,
+     "kgco2e": 14.379
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 6.2,
+     "kgco2e": 8.655
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.2,
+     "kgco2e": 5.863
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-COF-2026-0016",
+   "sector": "COF",
+   "sector_name": "Coffee & agriculture",
+   "holder": "Sidama-02",
+   "batch": "AP-5231",
+   "units": 569,
+   "unit_name": "plantlet",
+   "kgco2e_per_unit": 0.325,
+   "kgco2e_total": 184.925,
+   "baseline_per_unit": 0.457,
+   "reduction_pct": 28.9,
+   "data_quality": 50.8,
+   "grade": "B",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 60,
+   "issued": "2026-08-31",
+   "expires": "2027-08-31",
+   "prev": "e0b0d6aa",
+   "hash": "d85d6376",
+   "payload": "AP-5231|184.925|0.325|B",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 61.5,
+     "kgco2e": 113.615
+    },
+    {
+     "key": "embedded_hardware",
+     "label": "Embedded hardware",
+     "share_pct": 17.9,
+     "kgco2e": 33.069
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 10.3,
+     "kgco2e": 19.028
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 6.2,
+     "kgco2e": 11.454
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.2,
+     "kgco2e": 7.759
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-MFG-2026-0017",
+   "sector": "MFG",
+   "sector_name": "Manufacturing",
+   "holder": "Extrusion-05",
+   "batch": "MF-3520",
+   "units": 3010,
+   "unit_name": "unit",
+   "kgco2e_per_unit": 0.461,
+   "kgco2e_total": 1387.61,
+   "baseline_per_unit": 0.697,
+   "reduction_pct": 33.9,
+   "data_quality": 30.5,
+   "grade": "C",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 40,
+   "issued": "2026-09-14",
+   "expires": "2027-09-14",
+   "prev": "d85d6376",
+   "hash": "ab556944",
+   "payload": "MF-3520|1387.61|0.461|C",
+   "lines": [
+    {
+     "key": "line_electricity",
+     "label": "Line electricity",
+     "share_pct": 78.0,
+     "kgco2e": 1082.336
+    },
+    {
+     "key": "process_heat",
+     "label": "Process heat",
+     "share_pct": 9.0,
+     "kgco2e": 124.885
+    },
+    {
+     "key": "compressed_air",
+     "label": "Compressed air",
+     "share_pct": 6.0,
+     "kgco2e": 83.257
+    },
+    {
+     "key": "material_input",
+     "label": "Material input",
+     "share_pct": 4.0,
+     "kgco2e": 55.504
+    },
+    {
+     "key": "outbound_logistics",
+     "label": "Outbound logistics",
+     "share_pct": 3.0,
+     "kgco2e": 41.628
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-FNB-2026-0018",
+   "sector": "FNB",
+   "sector_name": "Food & beverage",
+   "holder": "Bakery-06",
+   "batch": "FN-4960",
+   "units": 2124,
+   "unit_name": "kg product",
+   "kgco2e_per_unit": 0.888,
+   "kgco2e_total": 1886.112,
+   "baseline_per_unit": 3.456,
+   "reduction_pct": 74.3,
+   "data_quality": 52.5,
+   "grade": "B",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 60,
+   "issued": "2026-09-27",
+   "expires": "2027-09-27",
+   "prev": "ab556944",
+   "hash": "c0907706",
+   "payload": "FN-4960|1886.112|0.888|B",
+   "lines": [
+    {
+     "key": "ingredient_production",
+     "label": "Ingredient production",
+     "share_pct": 52.0,
+     "kgco2e": 980.778
+    },
+    {
+     "key": "processing_energy",
+     "label": "Processing energy",
+     "share_pct": 22.0,
+     "kgco2e": 414.945
+    },
+    {
+     "key": "cold_chain",
+     "label": "Cold chain",
+     "share_pct": 9.0,
+     "kgco2e": 169.75
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 11.0,
+     "kgco2e": 207.472
+    },
+    {
+     "key": "inbound_transport",
+     "label": "Inbound transport",
+     "share_pct": 6.0,
+     "kgco2e": 113.167
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-FNB-2026-0019",
+   "sector": "FNB",
+   "sector_name": "Food & beverage",
+   "holder": "Cannery-03",
+   "batch": "FN-9205",
+   "units": 4838,
+   "unit_name": "kg product",
+   "kgco2e_per_unit": 2.139,
+   "kgco2e_total": 10348.482,
+   "baseline_per_unit": 3.122,
+   "reduction_pct": 31.5,
+   "data_quality": 84.1,
+   "grade": "A",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 80,
+   "issued": "2026-10-11",
+   "expires": "2027-10-11",
+   "prev": "c0907706",
+   "hash": "f0238400",
+   "payload": "FN-9205|10348.482|2.139|A",
+   "lines": [
+    {
+     "key": "ingredient_production",
+     "label": "Ingredient production",
+     "share_pct": 52.0,
+     "kgco2e": 5381.211
+    },
+    {
+     "key": "processing_energy",
+     "label": "Processing energy",
+     "share_pct": 22.0,
+     "kgco2e": 2276.666
+    },
+    {
+     "key": "cold_chain",
+     "label": "Cold chain",
+     "share_pct": 9.0,
+     "kgco2e": 931.363
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 11.0,
+     "kgco2e": 1138.333
+    },
+    {
+     "key": "inbound_transport",
+     "label": "Inbound transport",
+     "share_pct": 6.0,
+     "kgco2e": 620.909
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  },
+  {
+   "label_id": "ZC-COF-2026-0020",
+   "sector": "COF",
+   "sector_name": "Coffee & agriculture",
+   "holder": "Antioquia-08",
+   "batch": "AP-7315",
+   "units": 822,
+   "unit_name": "plantlet",
+   "kgco2e_per_unit": 0.273,
+   "kgco2e_total": 224.406,
+   "baseline_per_unit": 0.403,
+   "reduction_pct": 32.3,
+   "data_quality": 76.0,
+   "grade": "A",
+   "method": "CJV-MTH-1.0",
+   "method_hash": "9b12abef",
+   "fee_cny": 80,
+   "issued": "2026-10-24",
+   "expires": "2027-10-24",
+   "prev": "f0238400",
+   "hash": "54980f3d",
+   "payload": "AP-7315|224.406|0.273|A",
+   "lines": [
+    {
+     "key": "electricity",
+     "label": "Electricity",
+     "share_pct": 61.5,
+     "kgco2e": 137.872
+    },
+    {
+     "key": "embedded_hardware",
+     "label": "Embedded hardware",
+     "share_pct": 17.9,
+     "kgco2e": 40.129
+    },
+    {
+     "key": "outbound_transport",
+     "label": "Outbound transport",
+     "share_pct": 10.3,
+     "kgco2e": 23.091
+    },
+    {
+     "key": "packaging",
+     "label": "Packaging",
+     "share_pct": 6.2,
+     "kgco2e": 13.899
+    },
+    {
+     "key": "nutrients",
+     "label": "Nutrients",
+     "share_pct": 4.2,
+     "kgco2e": 9.416
+    }
+   ],
+   "provenance": "simulated",
+   "status": "published"
+  }
+ ]
+}

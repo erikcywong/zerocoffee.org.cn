@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CJV-MTH-1.0 specification — ZeroCarbon Verify</title>
+<meta name="description" content="The normative specification behind the registry: verified unit, evidence grading, baseline co-signing, refusal semantics, hash chain and the claim partition. Version 1.0, CC BY 4.0, with the register snapshot and a verifier.">>
+<link rel="canonical" href="https://zerocoffee.org.cn/establishment/two-track.html">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZeroCarbon Verify">
+<meta property="og:title" content="Two-track plan — ZeroCarbon Verify">
+<meta property="og:description" content="Two tracks: a licensed partner signs today, the body is restructured over 6-12 months. The three options, what may be said, and five actions.">
+<meta property="og:url" content="https://zerocoffee.org.cn/establishment/two-track.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Two-track plan — ZeroCarbon Verify">
+<meta name="twitter:description" content="Two tracks: a licensed partner signs today, the body is restructured over 6-12 months. The three options, what may be said, and five actions.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="util"><div class="wrap">
+  <span>Methodology &amp; public registry · Hong Kong</span>
+  <span class="badge warn">Not a certification body · no certification conclusions</span>
+  <div class="right"><a href="../establishment/index.html">Establishment</a><a href="../registry/index.html">Label registry</a></div>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="6" stroke="#00205b" stroke-width="1.6"/><path d="M11 25.5a4 4 0 0 1 .4-8 5.8 5.8 0 0 1 11.2-1.5 4.2 4.2 0 0 1 .8 8.3" stroke="#00958f" stroke-width="1.9" stroke-linecap="round"/><path d="M14.4 23.6l3.2 3.2 6.2-6.7" stroke="#00958f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 32h18" stroke="#00205b" stroke-width="1.6" stroke-linecap="round" opacity=".45"/></svg>
+    <b>ZeroCarbon Verify</b><span>zero-carbon assurance</span></a>
+  <nav class="main">
+    <div class="item"><a href="../services/index.html">Services</a></div>
+    <div class="item"><a href="../industries/index.html">Industries</a></div>
+    <div class="item"><a href="../platform/index.html">Digital platform</a></div>
+    <div class="item"><a href="../simulator/index.html">Simulator</a></div>
+    <div class="item"><a href="../insights/index.html">Insights</a></div>
+    <div class="item"><a href="../about/index.html">About</a></div>
+    <div class="item"><a href="../certify/index.html">Case</a></div>
+    
+  </nav>
+  <div class="head-cta"><a class="btn btn-ghost btn-sm" href="../registry/index.html">Verify a label</a><a class="btn btn-primary btn-sm" href="../contact/index.html">Request a quote</a><button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+  <div class="nav-drawer" id="navDrawer"><div class="wrap inner">
+      <a href="../services/index.html">Services</a>
+      <a href="../industries/index.html">Industries</a>
+      <a href="../platform/index.html">Digital platform</a>
+      <a href="../simulator/index.html">Simulator</a>
+      <a href="../insights/index.html">Insights</a>
+      <a href="../about/index.html">About</a>
+      <a href="../certify/index.html">Case</a>
+      <div class="util-links"><a href="../registry/index.html">Verify a label</a><a href="../contact/index.html">Request a quote</a><a href="../admin/index.html">Operator console</a><a href="../establishment/index.html">Establishment</a></div>
+  </div></div>
+</header>
+<div class="crumb"><div class="wrap"><a href="../index.html">Home</a><span class="sep">/</span><span class="here">Specification</span></div></div>
+<section>
+  <div class="wrap">
+<div class="art">
+<div class="eyebrow">Method · ZCV-SPEC-001</div>
+<h1 style="font-size:34px;letter-spacing:-1px;margin:10px 0 12px">CJV-MTH-1.0 — the specification</h1>
+<p class="lead">The method this registry runs on, published as a numbered document, so that a reviewer can
+check a claim against a version rather than against a website. Version 1.0, 2026-11-06, CC BY 4.0.</p>
+
+<div class="note"><b>What this document is.</b> A normative specification: the verified unit, the evidence
+grade, the counterfactual baseline rule, four refusal classes, the hash chain and the claim partition around
+countersignature. It is not an accredited standard and confers no certification. Section 15 of the document
+states the seven limitations, including the author's dual role.</div>
+
+<h2>Download</h2>
+<table class="data"><thead><tr><th>File</th><th>What it is</th><th>Size</th></tr></thead><tbody>
+<tr><td><a href="CJV-MTH-1.0.pdf"><b>CJV-MTH-1.0.pdf</b></a></td>
+<td>The specification, 11 pages, 22 sections, 18 tables</td><td>242 KB</td></tr>
+<tr><td><a href="register-labels.json">register-labels.json</a></td>
+<td>The register snapshot the document describes — 20 records, head <code>54980f3d</code></td>
+<td>26 KB</td></tr>
+<tr><td><a href="verify_register.py">verify_register.py</a></td>
+<td>Dependency-free verifier: recomputes payloads, chain, arithmetic and grades</td><td>3 KB</td></tr>
+</tbody></table>
+<p>Deposit on Zenodo pending. The DOI, once assigned, will be quoted here and on the
+<a href="../establishment/index.html">establishment file</a> next to the method hash, so that a citation can be
+checked against a version rather than a page.</p>
+
+<h2>What the document specifies</h2>
+<table class="data"><thead><tr><th>Section</th><th>Content</th></tr></thead><tbody>
+<tr><td>6</td><td>The verified unit: five properties, eighteen required fields, invariants that must reject at issuance</td></tr>
+<tr><td>7</td><td>Evidence grading: the grade is arithmetic over the metered share, never commercial preference</td></tr>
+<tr><td>8</td><td>Counterfactual baseline: it must be co-signed before the improvement it measures</td></tr>
+<tr><td>9</td><td>Refusal semantics: four classes, recorded with the same care as a unit</td></tr>
+<tr><td>10</td><td>Canonical payload, FNV-1a parameters, chain construction, revocation</td></tr>
+<tr><td>12</td><td>The claim partition: what an evidence layer may state, and what needs a countersignature</td></tr>
+<tr><td>13</td><td>Conformance test vectors taken from the live register</td></tr>
+</tbody></table>
+
+<h2>The five properties of a verified unit</h2>
+<table class="data"><thead><tr><th>Property</th><th>Requirement</th><th>Fails when</th></tr></thead><tbody>
+<tr><td>Metered</td><td>The footprint derives from measured quantities</td><td>Only invoices exist</td></tr>
+<tr><td>Bounded</td><td>Boundary and functional unit fixed before data collection</td><td>Chosen after the result</td></tr>
+<tr><td>Attributed</td><td>One owner, one location, one batch id</td><td>Split across sites without a rule</td></tr>
+<tr><td>Committed</td><td>Hashed at issuance, not editable afterwards</td><td>A value is revised silently</td></tr>
+<tr><td>Recomputable</td><td>A third party reproduces the hash without the issuer</td><td>Verification requires asking us</td></tr>
+</tbody></table>
+<p>A record failing one property is not a weaker unit. It is not a unit.</p>
+
+<h2>Verify the register yourself</h2>
+<p>Download the two files above and run the verifier. It needs no dependencies beyond Python 3.8 and no
+network access; it recomputes every hash from the published fields.</p>
+<pre style="background:#0c1015;border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow:auto;font:12.5px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;color:#c9ffe9"><code>python verify_register.py
+
+  file:            register-labels.json
+  records:         20
+  declared head:   54980f3d
+  recomputed head: 54980f3d
+  method:          CJV-MTH-1.0 / 9b12abef
+
+  OK — payload, chain, arithmetic and grades all verify</code></pre>
+<p>Change one digit in the snapshot and the run fails, naming the first record that breaks and every record
+after it. That is the whole point: a claim that cannot be checked by someone who does not trust us is not
+evidence.</p>
+
+<h2>Three test vectors</h2>
+<table class="data"><thead><tr><th>#</th><th>prev</th><th>payload</th><th>hash</th></tr></thead><tbody>
+<tr><td>1</td><td><code>genesis</code></td><td><code>AP-8885|185.735|0.307|A</code></td><td><code>889fdaf6</code></td></tr>
+<tr><td>2</td><td><code>889fdaf6</code></td><td><code>AP-2856|295.75|0.338|B</code></td><td><code>f24da836</code></td></tr>
+<tr><td>20</td><td><code>f0238400</code></td><td><code>AP-7315|224.406|0.273|A</code></td><td><code>54980f3d</code></td></tr>
+</tbody></table>
+
+<h2>What it is not</h2>
+<table class="data"><thead><tr><th>Not this</th><th>Why</th></tr></thead><tbody>
+<tr><td>An accredited standard</td><td>No accreditation body has assessed this body; conformance is a statement about structure, not competence</td></tr>
+<tr><td>A certification</td><td>The specification defines records; conclusions are countersigned by a licensed partner</td></tr>
+<tr><td>Evidence of effectiveness</td><td>It contains no pilot and no evaluation — Section 15 says so</td></tr>
+<tr><td>A cryptographic guarantee</td><td>FNV-1a resists casual modification, not an adversary who rewrites the whole chain</td></tr>
+</tbody></table>
+
+<h2>How to cite</h2>
+<p style="background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:13.5px">
+ZeroCarbon Verify (HK). <i>CJV-MTH-1.0 — Evidence-Graded Product Carbon Claim Registry: Specification</i>,
+version 1.0, 2026. DOI: 10.5281/zenodo.XXXXXXX (pending).</p>
+<p>When citing the register, quote the record count and head hash alongside the date — the register changes,
+the citation should name the state it referred to.</p>
+
+<div class="note">Related: the <a href="../establishment/two-track.html">two-track plan</a> places the signature
+layer outside this specification; the <a href="../verified-unit/index.html">verified unit</a> page is the
+practical version of Section 6; the <a href="../registry/index.html">register</a> is the running instance.</div>
+
+</div>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <div><b style="color:#fff;font-size:15px">ZeroCarbon Verify</b><p style="margin-top:12px;max-width:34ch;color:#8ea8c6">Methodology and public registry for carbon claims in agricultural supply chains. We publish the method, the evidence grades and the register; certification conclusions are signed by accredited partners. Hong Kong.</p><p style="margin-top:16px"><span class="badge warn">Not yet accredited</span></p></div>
+    <div><h4>Services</h4><a href="../services/index.html#pcf">Product carbon footprint</a><a href="../services/index.html#label">Carbon labels</a><a href="../services/index.html#assurance">Data assurance</a><a href="../services/index.html#baseline">Baseline co-signing</a><a href="../eudr/index.html">EUDR evidence pack</a>
+        <a href="../verified-unit/index.html">The verified unit</a>
+        <a href="../registry-eaas/index.html">Registry as a service</a>
+        </div>
+    <div><h4>Company</h4><a href="../about/index.html">About</a><a href="../establishment/conditions.html">Conditions of establishment</a><a href="../establishment/governance.html">Impartiality</a><a href="../contact/index.html">Contact</a><a href="../status/index.html">Status</a>
+        <a href="../specification/index.html">Specification</a>
+        </div>
+    <div><h4>Platform</h4><a href="../platform/index.html">Digital platform</a><a href="../registry/index.html">Label registry</a><a href="../simulator/index.html">Revenue simulator</a><a href="../establishment/index.html">Establishment file</a></div>
+  </div>
+  <div class="bot"><span>© 2026 ZeroCarbon Verify (HK) Limited — establishment documents, not an accreditation certificate.</span><span>Nothing here constitutes a tradable carbon credit.</span></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
