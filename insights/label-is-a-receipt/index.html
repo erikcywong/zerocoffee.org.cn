@@ -59,7 +59,7 @@
 <div class="note" style="font-family:var(--mono);font-size:11.5px;letter-spacing:.4px;color:var(--gray);border:0;padding:0 0 18px;margin:0 0 6px;border-bottom:1px solid var(--line)">ZERO CARBON VERIFY · ESTABLISHMENT NOTE · 5 MIN READ</div>
 <p class="lead">Most carbon labels are decoration with a logo. They assert a conclusion and withhold the working, which makes them impossible to audit and trivial to fake.</p>
 <h2>What a label actually contains</h2>
-<p>The labels we issue carry fourteen fields and a hash. The fields are the claim; the hash is the mechanism that stops the claim being edited after the fact.</p>
+<p>The label records we write carry fourteen fields and a hash. The fields are the claim; the hash is the mechanism that stops the claim being edited after the fact.</p>
 <table class="data"><thead><tr><th>Field group</th><th>What it holds</th><th>Why it is there</th></tr></thead><tbody><tr><td>Identity</td><td>label id, batch, issue date, expiry</td><td>Can be tied to physical goods</td></tr><tr><td>Method</td><td>version, hash, boundary, GWP set</td><td>Two labels are comparable only on the same method</td></tr><tr><td>Result</td><td>per-unit, total, baseline, reduction</td><td>The number and the denominator</td></tr><tr><td>Quality</td><td>metered share, grade, interval</td><td>How much is measured rather than assumed</td></tr><tr><td>Provenance</td><td>verifier, status, liabilities</td><td>Who signed and what they are allowed to claim</td></tr></tbody></table>
 <h2>The hash is the point</h2>
 <p>Each label commits to its payload and to the previous label's hash:</p>
@@ -70,7 +70,7 @@
 <h2>Try it on the register</h2>
 <p>The verification page recomputes the chain in the browser, with no server call. If you change a digit in the payload, the check turns red — which is the only demonstration of integrity that is worth anything.</p>
 <div style="margin:36px 0 8px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" href="../../contact/index.html">Talk to us</a><a class="btn btn-ghost" href="../index.html">← All insights</a></div>
-<p class="note" style="margin-top:26px">This note describes our method and commercial position. It is not a verification statement and carries no assurance.</p>
+<p class="note" style="margin-top:26px">This note describes our method and commercial position. It is not a verification statement and carries no assurance. Under the two-track plan the certification conclusion is signed by a licensed partner; this site issues the method, the evidence grades and the register.</p>
 </div>
   </div>
 </section>
